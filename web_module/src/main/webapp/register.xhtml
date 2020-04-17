@@ -22,9 +22,9 @@
             <h:panelGrid columns="4" cellpadding="5" style="border:0px !important; background:none;margin:0 auto">
 
                 <h:outputLabel for="fName" value="Förnamn:"/>
-                <p:inputText id="fName" label="fName" value="#{registerController.firstName}" required="true" validatorMessage="no name"/>
+                <p:inputText id="fName" label="fName" value="#{registerController.fName}" required="true" validatorMessage="no name"/>
                 <h:outputLabel for="lName" value="Efternamn:"/>
-                <p:inputText id="lName" label="lName" value="#{registerController.lastName}" required="true"/>
+                <p:inputText id="lName" label="lName" value="#{registerController.lName}" required="true"/>
 
                 <h:outputLabel for="address" value="Gata:"/>
                 <p:inputText id="address" label="address" value="#{registerController.address}" required="true"/>
@@ -44,7 +44,7 @@
                 <p:password id="password2" label="password2" value="#{registerController.password}" feedback="true" required="true"/>
 
             </h:panelGrid>
-            <p:commandButton action="#{registerController.register}" value="Registrera" ajax="false" icon="pi pi-check" validateClient="true" />
+            <p:commandButton action="#{registerController.registerUser}" value="Registrera" ajax="false" icon="pi pi-check" validateClient="true" />
         </p:panel>
     </h:form>
 </h:body>
