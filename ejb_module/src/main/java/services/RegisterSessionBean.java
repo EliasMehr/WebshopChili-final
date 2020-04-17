@@ -36,6 +36,7 @@ public class RegisterSessionBean implements RegisterUserLocal {
     public Role selectRole() {
         Role role = new Role();
         role.setType(Role.Type.REGULAR_USER);
+        role.setId((long) 1);
         return role;
     }
 

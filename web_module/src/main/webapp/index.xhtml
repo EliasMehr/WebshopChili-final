@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv='Content-Type' content='application/xhtml+xml; charset=UTF-8'/>
+    <title>Chili Gruppen</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+</h:head>
+<h:body>
+    <!-- Meny -->
+    <h:form id="menu">
+        <p:menubar>
+            <p:menuitem icon="pi pi-home"/>
+
+            <p:submenu value="Kategorier" label="Kategorier">
+                <p:menuitem value="Röd chili"/>
+                <p:menuitem value="Grön chili"/>
+                <p:menuitem value="Rosa chili"/>
+            </p:submenu>
+
+            <p:menuitem value="Kontakta"/>
+            <p:menuitem icon="pi pi-shopping-cart" />
+            <f:facet name="options">
+                <p:inputText style="margin: 1px 10px 1px 1px"
+                             placeholder="Sök"
+                             value="#{indexController.search}"
+                >
+                    <p:ajax event="keyup" update=""/>
+                </p:inputText>
+                <p:commandButton  value="Logga in" onclick="PF('loginDialog').show()"/> <!-- action="loggain.xhtml" -->
+                <p:commandButton action="register.xhtml" value="Registrera"/>
+            </f:facet>
+
+        </p:menubar>
+    </h:form>
+
+
+    <!-- Lägger in produkter i grid (dynamisk) och visar de på sidan -->
+    <p:dataGrid var="product" value="#{indexController.productList}" columns="3" styleClass="gridStyle">
+        <p:panel id="panel" header="#{product.name}" style="text-align:center">
+            <p:commandLink  oncomplete="PF('popup').show()" action="#{indexController.modal(product)}" update="dialogId">
+                <h:panelGrid id="productPanel" columns="1" styleClass="productDesign">
+                    <p:graphicImage library="images" name="#{product.image_url}" styleClass="productImage" />
+                    <p:outputLabel value="Scoville: #{product.scoville_strength}"/>
+                    <p:outputLabel value="#{product.price}kr"/>
+                </h:panelGrid>
+            </p:commandLink>
+        </p:panel>
+    </p:dataGrid>
+
+
+
+    <!--  Popup dialog när man klickar på en product  -->
+    <p:dialog id="dialogId" header="#{indexController.currentProduct.name}" widgetVar="popup" showEffect="fade"
+              hideEffect="fade" >
+        <h:panelGrid columns="1">
+            <h:graphicImage library="images" name="#{indexController.currentProduct.image_url}"/>
+            <h:outputText id="testId" value="#{indexController.currentProduct.description}"/>
+            <br/>
+            <h:outputText value="#{indexController.currentProduct.price}"/>
+            <br/>
+            <h:commandButton value="Köp"/>
+        </h:panelGrid>
+    </p:dialog>
+
+    <p:dialog id="loginId" header="Login" widgetVar="loginDialog" showEffect="fade" hideEffect="fadeout" modal="true">
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="user" value="Användarnamn:"/>
+                <p:inputText id="user" value="#{loginController.username}"/>
+                <h:outputLabel for="passBox" value="Lösenord:"/>
+                <p:password id="passBox" value="#{loginController.password}"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2" cellpadding="5" style="background:none;margin:0 auto; padding-top: 5px">
+                <p:commandButton value="Logga in" action="#{loginController.login}"
+                                 process="@form" partialSubmit="true" ajax="true" oncomplete="handleLoginRequest(xhr, status, args)"/>
+                <p:commandButton value="Glömt Lösen"/>
+            </h:panelGrid>
+        </h:form>
+    </p:dialog>
+
+
+    <h:outputScript library="js" name="script.js" />
+</h:body>
+</html>
