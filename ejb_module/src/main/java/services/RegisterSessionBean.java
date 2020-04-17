@@ -40,8 +40,13 @@ public class RegisterSessionBean implements RegisterUserLocal {
     }
 
     @Override
-    public void post(User user) {
-        userDAO.create(user);
+    public boolean post(User user) {
+        try {
+            userDAO.create(user);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
 
