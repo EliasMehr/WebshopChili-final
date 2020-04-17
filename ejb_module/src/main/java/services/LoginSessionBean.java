@@ -15,9 +15,7 @@ public class LoginSessionBean implements LoginUserLocal {
     @Inject
     private UserDAO userDAO;
 
-    public LoginSessionBean() {
-
-    }
+    public LoginSessionBean() {}
 
     @Override
     public boolean login(String username, String password) {
