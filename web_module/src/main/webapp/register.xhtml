@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv='Content-Type' content='application/xhtml+xml; charset=UTF-8'/>
+    <title>Registrera</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+</h:head>
+<h:body>
+    <h:form id="regForm">
+
+        <p:panel header="Registrering">
+            <p:messages>
+                <p:autoUpdate/>
+            </p:messages>
+
+            <h:panelGrid columns="4" cellpadding="5" style="border:0px !important; background:none;margin:0 auto">
+
+                <h:outputLabel for="fName" value="Förnamn:"/>
+                <p:inputText id="fName" label="fName" value="#{registerController.firstName}" required="true" validatorMessage="no name"/>
+                <h:outputLabel for="lName" value="Efternamn:"/>
+                <p:inputText id="lName" label="lName" value="#{registerController.lastName}" required="true"/>
+
+                <h:outputLabel for="address" value="Gata:"/>
+                <p:inputText id="address" label="address" value="#{registerController.address}" required="true"/>
+                <h:outputLabel for="city" value="Stad:"/>
+                <p:inputText id="city" label="city" value="#{registerController.city}" required="true"/>
+
+                <h:outputLabel for="email" value="Mail:"/>
+                <p:inputText id="email" label="email" value="#{registerController.email}" required="true">
+                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                </p:inputText>
+                <h:outputLabel for="phone" value="Telefon:"/>
+                <p:inputMask id="phone" label="phone" value="#{registerController.phone}" required="true" mask="(999) 999-9999"/>
+
+                <h:outputLabel for="password" value="Lösenord:"/>
+                <p:password id="password" label="password" value="#{registerController.password}" match="password2" feedback="true" required="true"/>
+                <h:outputLabel for="password2" value="Lösenord igen:"/>
+                <p:password id="password2" label="password2" value="#{registerController.password}" feedback="true" required="true"/>
+
+            </h:panelGrid>
+            <p:commandButton action="#{registerController.register}" value="Registrera" ajax="false" icon="pi pi-check" validateClient="true" />
+        </p:panel>
+    </h:form>
+</h:body>
+</html>

@@ -1,0 +1,3 @@
+# Project exclude paths
+/ejb_module/target/
+/web_module/target/
