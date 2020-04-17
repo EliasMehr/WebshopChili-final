@@ -27,7 +27,6 @@ public class LoginController implements Serializable {
 
     }
 
-
     public String getUsername() {
         return username;
     }
