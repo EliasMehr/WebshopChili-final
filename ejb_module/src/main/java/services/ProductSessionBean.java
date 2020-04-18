@@ -18,4 +18,9 @@ public class ProductSessionBean implements ProductLocal {
     public List<Product> loadAllProducts() {
         return productDAO.getAllProducts();
     }
+
+    @Override
+    public void addToCart() {
+
+    }
 }

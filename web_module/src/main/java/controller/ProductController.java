@@ -21,6 +21,22 @@ public class ProductController implements Serializable {
     private Product currentProduct;
     private int currentProductCount;
 
+
+    @PostConstruct
+    public void init() {
+        setProductList(productSession.loadAllProducts());
+    }
+
+    public void modal(Product product) {
+        System.out.println("CLICKED PRODUCT = " + product.getName());
+        setCurrentProduct(product);
+    }
+
+    public void addToCart() {
+
+    }
+
+
     public int getCurrentProductCount() {
         return currentProductCount;
     }
@@ -45,13 +61,4 @@ public class ProductController implements Serializable {
         this.currentProduct = currentProduct;
     }
 
-    @PostConstruct
-    public void init() {
-        setProductList(productSession.loadAllProducts());
-    }
-
-    public void modal(Product product) {
-        System.out.println("CLICKED PRODUCT = " + product.getName());
-        setCurrentProduct(product);
-    }
 }

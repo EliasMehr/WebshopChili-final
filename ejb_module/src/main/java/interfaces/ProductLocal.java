@@ -9,4 +9,6 @@ import java.util.List;
 public interface ProductLocal{
 
     List<Product> loadAllProducts();
+
+    void addToCart();
 }
