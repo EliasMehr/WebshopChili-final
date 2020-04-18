@@ -31,6 +31,7 @@ public class UserDAO extends AbstractCRUD<User> {
         typedQuery.setParameter("email", inputEmail);
         try {
             return typedQuery.getResultList();
+
         }
         catch (Exception e) {
             System.out.println("CAUGHT ERRORRRRRR");

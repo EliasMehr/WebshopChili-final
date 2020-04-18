@@ -22,6 +22,8 @@ public class indexController implements Serializable {
 
     private String search;
 
+    private int productCount;
+
     private Product currentProduct;
 
     public String getSearch() {
@@ -46,6 +48,14 @@ public class indexController implements Serializable {
 
     public void setCurrentProduct(Product currentProduct) {
         this.currentProduct = currentProduct;
+    }
+
+    public int getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
     }
 
     @PostConstruct

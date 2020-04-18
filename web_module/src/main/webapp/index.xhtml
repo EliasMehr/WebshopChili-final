@@ -58,17 +58,21 @@
     <!--  Popup dialog när man klickar på en product  -->
     <p:dialog id="dialogId" header="#{indexController.currentProduct.name}" widgetVar="popup" showEffect="fade"
               hideEffect="fade" closeOnEscape="true">
-        <h:panelGrid columns="1">
+        <p:panelGrid columns="1">
             <h:graphicImage library="images" name="#{indexController.currentProduct.image_url}"/>
             <h:outputText id="testId" value="#{indexController.currentProduct.description}"/>
             <br/>
             <h:outputText value="#{indexController.currentProduct.price}"/>
             <br/>
-            <h:commandButton value="Köp"/>
-        </h:panelGrid>
+
+                <p:commandButton value="Köp"/>
+                <p:spinner id="numberOfProducts" value="#{indexController.productCount}" min="1" max="99"/>
+
+        </p:panelGrid>
     </p:dialog>
 
 
+    <!-- Popup modal för inloggningsrutan, FaceMessage i högra hörnet. Login knapp har en oncomplete som kallar på en JS funktion.-->
     <p:dialog id="loginId" header="Login" widgetVar="loginDialog" showEffect="fade"
               hideEffect="fade" modal="true" closable="true" appendToBody="true" closeOnEscape="true">
         <h:form>
