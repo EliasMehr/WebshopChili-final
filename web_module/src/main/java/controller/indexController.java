@@ -62,6 +62,10 @@ public class indexController implements Serializable {
 
     }
 
+    public void searchProduct() {
+
+    }
+
     public void modal(Product product) {
         System.out.println("CLICKED PRODUCT = " + product.getName());
         setCurrentProduct(product);
