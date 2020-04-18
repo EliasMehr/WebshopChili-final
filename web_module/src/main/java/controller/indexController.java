@@ -22,6 +22,8 @@ public class indexController implements Serializable {
 
     private String search;
 
+    private int productCount;
+
     private Product currentProduct;
 
     public String getSearch() {
@@ -48,6 +50,14 @@ public class indexController implements Serializable {
         this.currentProduct = currentProduct;
     }
 
+    public int getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
+    }
+
     @PostConstruct
     public void init() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -58,7 +68,9 @@ public class indexController implements Serializable {
         productList = typedQuery.getResultList();
         entityManager.close();
 
+    }
 
+    public void searchProduct() {
 
     }
 

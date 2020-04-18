@@ -57,19 +57,26 @@
 
     <!--  Popup dialog när man klickar på en product  -->
     <p:dialog id="dialogId" header="#{indexController.currentProduct.name}" widgetVar="popup" showEffect="fade"
-              hideEffect="fade" >
-        <h:panelGrid columns="1">
+              hideEffect="fade" closeOnEscape="true">
+        <p:panelGrid columns="1">
             <h:graphicImage library="images" name="#{indexController.currentProduct.image_url}"/>
             <h:outputText id="testId" value="#{indexController.currentProduct.description}"/>
             <br/>
             <h:outputText value="#{indexController.currentProduct.price}"/>
             <br/>
-            <h:commandButton value="Köp"/>
-        </h:panelGrid>
+
+                <p:commandButton value="Köp"/>
+                <p:spinner id="numberOfProducts" value="#{indexController.productCount}" min="1" max="99"/>
+
+        </p:panelGrid>
     </p:dialog>
 
-    <p:dialog id="loginId" header="Login" widgetVar="loginDialog" showEffect="fade" hideEffect="fadeout" modal="true">
+
+    <!-- Popup modal för inloggningsrutan, FaceMessage i högra hörnet. Login knapp har en oncomplete som kallar på en JS funktion.-->
+    <p:dialog id="loginId" header="Login" widgetVar="loginDialog" showEffect="fade"
+              hideEffect="fade" modal="true" closable="true" appendToBody="true" closeOnEscape="true">
         <h:form>
+            <p:growl id="growl" showDetail="true" life="2000"/>
             <h:panelGrid columns="2" cellpadding="5">
                 <h:outputLabel for="user" value="Användarnamn:"/>
                 <p:inputText id="user" value="#{loginController.username}"/>
@@ -77,9 +84,9 @@
                 <p:password id="passBox" value="#{loginController.password}"/>
             </h:panelGrid>
             <h:panelGrid columns="2" cellpadding="5" style="background:none;margin:0 auto; padding-top: 5px">
-                <p:commandButton value="Logga in" action="#{loginController.login}"
+                <p:commandButton update="growl" value="Logga in" action="#{loginController.login}"
                                  process="@form" partialSubmit="true" ajax="true" oncomplete="handleLoginRequest(xhr, status, args)"/>
-                <p:commandButton value="Glömt Lösen"/>
+                <p:commandButton value="Skapa konto" action="register"/>
             </h:panelGrid>
         </h:form>
     </p:dialog>
