@@ -41,7 +41,7 @@
 
 
     <!-- Lägger in produkter i grid (dynamisk) och visar de på sidan -->
-    <p:dataGrid var="product" value="#{indexController.productList}" columns="3" styleClass="gridStyle">
+    <p:dataGrid var="product" value="#{productController.productList}" columns="3" styleClass="gridStyle">
         <p:panel id="panel" header="#{product.name}" style="text-align:center">
             <p:commandLink  oncomplete="PF('popup').show()" action="#{indexController.modal(product)}" update="dialogId">
                 <h:panelGrid id="productPanel" columns="1" styleClass="productDesign">
@@ -58,17 +58,15 @@
     <!--  Popup dialog när man klickar på en product  -->
     <p:dialog id="dialogId" header="#{indexController.currentProduct.name}" widgetVar="popup" showEffect="fade"
               hideEffect="fade" closeOnEscape="true">
-        <p:panelGrid columns="1">
+        <h:panelGrid columns="1">
             <h:graphicImage library="images" name="#{indexController.currentProduct.image_url}"/>
             <h:outputText id="testId" value="#{indexController.currentProduct.description}"/>
             <br/>
             <h:outputText value="#{indexController.currentProduct.price}"/>
             <br/>
-
-                <p:commandButton value="Köp"/>
-                <p:spinner id="numberOfProducts" value="#{indexController.productCount}" min="1" max="99"/>
-
-        </p:panelGrid>
+            <p:commandButton value="Köp"/>
+<!--            <p:spinner id="numberOfProducts" value="#{indexController.productCount}"/>-->
+        </h:panelGrid>
     </p:dialog>
 
 

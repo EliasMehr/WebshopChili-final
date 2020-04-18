@@ -58,17 +58,17 @@ public class indexController implements Serializable {
         this.productCount = productCount;
     }
 
-    @PostConstruct
-    public void init() {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-
-        TypedQuery<Product> typedQuery = entityManager.createQuery("" +
-                "select p from Product p", Product.class);
-        productList = typedQuery.getResultList();
-        entityManager.close();
-
-    }
+//    @PostConstruct
+//    public void init() {
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//        entityManager.getTransaction().begin();
+//
+//        TypedQuery<Product> typedQuery = entityManager.createQuery("" +
+//                "select p from Product p", Product.class);
+//        productList = typedQuery.getResultList();
+//        entityManager.close();
+//
+//    }
 
     public void searchProduct() {
 
