@@ -12,6 +12,6 @@ public interface RegisterUserLocal {
 
     Role selectRole();
 
-    boolean post(User user);
+    boolean submit(User user);
 
 }

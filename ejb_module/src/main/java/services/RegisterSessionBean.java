@@ -41,7 +41,7 @@ public class RegisterSessionBean implements RegisterUserLocal {
     }
 
     @Override
-    public boolean post(User user) {
+    public boolean submit(User user) {
         try {
             userDAO.create(user);
         } catch (Exception e) {
