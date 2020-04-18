@@ -19,9 +19,14 @@ public class LoginSessionBean implements LoginUserLocal {
 
     @Override
     public boolean login(String username, String password) {
-        User user = requestUser(username);
 
-        return isCorrectPassword(user, password);
+        try {
+            User user = requestUser(username);
+            return isCorrectPassword(user, password);
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 
     @Override

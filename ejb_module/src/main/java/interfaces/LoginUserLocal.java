@@ -3,7 +3,6 @@ package interfaces;
 import model.User;
 
 import javax.ejb.Local;
-import javax.ejb.Remote;
 
 @Local
 public interface LoginUserLocal {

@@ -19,11 +19,12 @@ public class LoginController implements Serializable {
 
     public String login() {
 
+
         if (loginSession.login(username, password)) {
             outputMessage = "Login successfully";
             return "index";
         }
-        return null;
+        return "Epic failure";
 
     }
 

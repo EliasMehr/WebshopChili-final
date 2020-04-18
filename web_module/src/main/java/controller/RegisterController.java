@@ -27,9 +27,9 @@ public class RegisterController implements Serializable {
 
     public void register() {
 
-      Role role =  register.selectRole();
-      User user =  register.createUser(firstName, lastName, address, city, phone, email, password, role);
-    register.post(user);
+        Role role = register.selectRole();
+        User user = register.createUser(firstName, lastName, address, city, phone, email, password, role);
+        register.post(user);
     }
 
 
