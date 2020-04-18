@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.List;
 import java.util.stream.Stream;
 
 @Stateless
@@ -19,14 +20,21 @@ public class LoginSessionBean implements LoginUserLocal {
 
     @Override
     public boolean login(String username, String password) {
-        User user = requestUser(username);
-
-        return isCorrectPassword(user, password);
+//        User user = requestUser(username);
+        List<User> userList = requestUser(username);
+        if(userList.isEmpty()) {
+            return false;
+        }
+        else {
+            return isCorrectPassword(userList.get(0), password);
+        }
     }
 
     @Override
-    public User requestUser(String username) {
+    public List<User> requestUser(String username) {
+
         return userDAO.findByEmail(username);
+
     }
 
     @Override

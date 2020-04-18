@@ -2,8 +2,12 @@ package controller;
 
 
 import interfaces.LoginUserLocal;
+import org.primefaces.PrimeFaces;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
 
@@ -12,18 +16,24 @@ import java.io.Serializable;
 public class LoginController implements Serializable {
     private String username;
     private String password;
-    private String outputMessage;
 
     @EJB
     LoginUserLocal loginSession;
 
-    public String login() {
+    public void login() {
+        boolean isSuccessfullyLoggedIn = false;
+        FacesMessage outputMessage = null;
 
         if (loginSession.login(username, password)) {
-            outputMessage = "Login successfully";
-            return "index";
+            isSuccessfullyLoggedIn = true;
+            outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Inloggning godkänd", null);
         }
-        return null;
+        else {
+            outputMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Fel användarnamn/lösenord");
+
+        }
+        FacesContext.getCurrentInstance().addMessage(null, outputMessage);
+        PrimeFaces.current().ajax().addCallbackParam("isSuccessfullyLoggedIn", isSuccessfullyLoggedIn);
 
     }
 
@@ -35,9 +45,6 @@ public class LoginController implements Serializable {
         return password;
     }
 
-    public String getOutputMessage() {
-        return outputMessage;
-    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -51,7 +58,4 @@ public class LoginController implements Serializable {
         this.loginSession = loginSession;
     }
 
-    public void setOutputMessage(String outputMessage) {
-        this.outputMessage = outputMessage;
-    }
 }
