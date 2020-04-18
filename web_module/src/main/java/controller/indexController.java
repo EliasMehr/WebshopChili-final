@@ -68,8 +68,6 @@ public class indexController implements Serializable {
         productList = typedQuery.getResultList();
         entityManager.close();
 
-
-
     }
 
     public void searchProduct() {

@@ -12,7 +12,7 @@ public interface LoginUserLocal {
 
     boolean login(String username, String password);
 
-    List<User> requestUser(String username);
+    User requestUser(String username);
 
     boolean isCorrectPassword(User user, String password);
 

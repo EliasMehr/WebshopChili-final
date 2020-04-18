@@ -26,7 +26,7 @@ public class LoginController implements Serializable {
 
         if (loginSession.login(username, password)) {
             isSuccessfullyLoggedIn = true;
-            outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Inloggning godkänd", null);
+            outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Välkommen", username);
         }
         else {
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Fel användarnamn/lösenord");

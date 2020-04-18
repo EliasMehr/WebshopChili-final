@@ -20,20 +20,19 @@ public class LoginSessionBean implements LoginUserLocal {
 
     @Override
     public boolean login(String username, String password) {
-//        User user = requestUser(username);
-        List<User> userList = requestUser(username);
-        if(userList.isEmpty()) {
-            return false;
+        try {
+            User user = requestUser(username);
+            return isCorrectPassword(user, password);
         }
-        else {
-            return isCorrectPassword(userList.get(0), password);
+        catch (Exception e) {
+            return false;
         }
     }
 
     @Override
-    public List<User> requestUser(String username) {
-
-        return userDAO.findByEmail(username);
+    public User requestUser(String username) {
+        User user = userDAO.findByEmail(username);
+        return Stream.of(user).findFirst().orElse(null);
 
     }
 

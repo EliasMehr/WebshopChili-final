@@ -26,17 +26,10 @@ public class UserDAO extends AbstractCRUD<User> {
         super(User.class);
     }
 
-    public List<User> findByEmail(String inputEmail) {
+    public User findByEmail(String inputEmail) {
         TypedQuery<User> typedQuery = em.createNamedQuery("getUserByEmail" , User.class);
         typedQuery.setParameter("email", inputEmail);
-        try {
-            return typedQuery.getResultList();
-
-        }
-        catch (Exception e) {
-            System.out.println("CAUGHT ERRORRRRRR");
-        }
-        return null;
+        return typedQuery.getSingleResult();
 
     }
 
