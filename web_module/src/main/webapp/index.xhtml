@@ -28,7 +28,7 @@
             <f:facet name="options">
                 <p:inputText style="margin: 1px 10px 1px 1px"
                              placeholder="Sök"
-                             value="#{indexController.search}"
+                             value="TBD"
                 >
                     <p:ajax event="keyup" update=""/>
                 </p:inputText>
@@ -41,9 +41,11 @@
 
 
     <!-- Lägger in produkter i grid (dynamisk) och visar de på sidan -->
-    <p:dataGrid var="product" value="#{productController.productList}" columns="3" styleClass="gridStyle">
+    <p:dataGrid var="product" value="#{productController.productList}" columns="3" styleClass="gridStyle" layout="grid"
+                paginator="true" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+    rowsPerPageTemplate="9" rows="9">
         <p:panel id="panel" header="#{product.name}" style="text-align:center">
-            <p:commandLink  oncomplete="PF('popup').show()" action="#{indexController.modal(product)}" update="dialogId">
+            <p:commandLink  oncomplete="PF('popup').show()" action="#{productController.modal(product)}" update="dialogId">
                 <h:panelGrid id="productPanel" columns="1" styleClass="productDesign">
                     <p:graphicImage library="images" name="#{product.image_url}" styleClass="productImage" />
                     <p:outputLabel value="Scoville: #{product.scoville_strength}"/>
@@ -56,17 +58,21 @@
 
 
     <!--  Popup dialog när man klickar på en product  -->
-    <p:dialog id="dialogId" header="#{indexController.currentProduct.name}" widgetVar="popup" showEffect="fade"
-              hideEffect="fade" closeOnEscape="true">
-        <h:panelGrid columns="1">
-            <h:graphicImage library="images" name="#{indexController.currentProduct.image_url}"/>
-            <h:outputText id="testId" value="#{indexController.currentProduct.description}"/>
+    <p:dialog id="dialogId" header="#{productController.currentProduct.name}" widgetVar="popup" showEffect="fade"
+              hideEffect="fade" closeOnEscape="true" >
+        <h:form>
+        <p:panelGrid columns="1" styleClass="panelGrid">
+            <h:graphicImage library="images" name="#{productController.currentProduct.image_url}"/>
+            <h:outputText id="testId" value="#{productController.currentProduct.description}"/>
             <br/>
-            <h:outputText value="#{indexController.currentProduct.price}"/>
+            <h:outputText value="#{productController.currentProduct.price}" suffix=" kr"/>
             <br/>
-            <p:commandButton value="Köp"/>
-<!--            <p:spinner id="numberOfProducts" value="#{indexController.productCount}"/>-->
-        </h:panelGrid>
+            <p:panelGrid columns="2">
+                <p:commandButton value="Köp" />
+                <p:spinner  min="1" max="100" value="#{productController.currentProductCount}"  suffix="st"/>
+            </p:panelGrid>
+        </p:panelGrid>
+        </h:form>
     </p:dialog>
 
 
@@ -81,7 +87,7 @@
                 <h:outputLabel for="passBox" value="Lösenord:"/>
                 <p:password id="passBox" value="#{loginController.password}"/>
             </h:panelGrid>
-            <h:panelGrid columns="2" cellpadding="5" style="background:none;margin:0 auto; padding-top: 5px">
+            <h:panelGrid columns="2" cellpadding="5" styleClass="panelGrid">
                 <p:commandButton update="growl" value="Logga in" action="#{loginController.login}"
                                  process="@form" partialSubmit="true" ajax="true" oncomplete="handleLoginRequest(xhr, status, args)"/>
                 <p:commandButton value="Skapa konto" action="register"/>

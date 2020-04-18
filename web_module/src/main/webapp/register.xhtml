@@ -14,37 +14,46 @@
 <h:body>
     <h:form id="regForm">
 
-        <p:panel header="Registrering">
+        <p:panel header="Registrering" styleClass="regHeader">
             <p:messages>
                 <p:autoUpdate/>
             </p:messages>
 
-            <h:panelGrid columns="4" cellpadding="5" style="border:0px !important; background:none;margin:0 auto">
+            <p:panelGrid columns="4" cellpadding="5" styleClass="panelGrid">
 
                 <h:outputLabel for="fName" value="Förnamn:"/>
-                <p:inputText id="fName" label="fName" value="#{registerController.firstName}" required="true" validatorMessage="no name"/>
+                <p:inputText id="fName" label="fName" value="#{registerController.firstName}"
+                             required="true" requiredMessage="Skriv ditt förnamn" />
                 <h:outputLabel for="lName" value="Efternamn:"/>
-                <p:inputText id="lName" label="lName" value="#{registerController.lastName}" required="true"/>
+                <p:inputText id="lName" label="lName" value="#{registerController.lastName}"
+                             required="true" requiredMessage="Skriv ditt efternamn"/>
 
                 <h:outputLabel for="address" value="Gata:"/>
-                <p:inputText id="address" label="address" value="#{registerController.address}" required="true"/>
+                <p:inputText id="address" label="address" value="#{registerController.address}"
+                             required="true" requiredMessage="Skriv din adress"/>
                 <h:outputLabel for="city" value="Stad:"/>
-                <p:inputText id="city" label="city" value="#{registerController.city}" required="true"/>
+                <p:inputText id="city" label="city" value="#{registerController.city}"
+                             required="true" requiredMessage="Skriv vilken stad"/>
 
                 <h:outputLabel for="email" value="Mail:"/>
-                <p:inputText id="email" label="email" value="#{registerController.email}" required="true">
+                <p:inputText id="email" label="email" value="#{registerController.email}"
+                             required="true" requiredMessage="Skriv din email">
                     <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                 </p:inputText>
                 <h:outputLabel for="phone" value="Telefon:"/>
-                <p:inputMask id="phone" label="phone" value="#{registerController.phone}" required="true" mask="(999) 999-9999"/>
+                <p:inputMask id="phone" label="phone" value="#{registerController.phone}"
+                             required="true" requiredMessage="Skriv ditt telefonnr" mask="(999) 999-9999"/>
 
                 <h:outputLabel for="password" value="Lösenord:"/>
-                <p:password id="password" label="password" value="#{registerController.password}" match="password2" feedback="true" required="true"/>
+                <p:password id="password" label="password" value="#{registerController.password}" match="password2" feedback="true"
+                            required="true" requiredMessage="Skriv ditt lösenord"/>
                 <h:outputLabel for="password2" value="Lösenord igen:"/>
-                <p:password id="password2" label="password2" value="#{registerController.password}" feedback="true" required="true"/>
+                <p:password id="password2" label="password2" value="#{registerController.password}" feedback="true"
+                            required="true" requiredMessage="Skriv ditt lösenord"/>
 
-            </h:panelGrid>
-            <p:commandButton action="#{registerController.register}" value="Registrera" ajax="false" icon="pi pi-check" validateClient="true" />
+            </p:panelGrid>
+            <p:commandButton action="#{registerController.register}" value="Registrera" ajax="false" icon="pi pi-check" validateClient="true" styleClass="regButton"/>
+            <p:commandButton action="index" value="Avbryt" styleClass="regButton" immediate="true"/>
         </p:panel>
     </h:form>
 </h:body>

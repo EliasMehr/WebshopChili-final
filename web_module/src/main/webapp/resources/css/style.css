@@ -9,4 +9,23 @@
     max-height: 150px;
 }
 
+.panelGrid {
+    background: none;
+    margin: 0 auto;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.panelGrid, .panelGrid td, .panelGrid tr {
+    border: hidden;
+}
+
+.regHeader {
+    text-align: center;
+}
+
+.regButton {
+    align-self: center;
+}
+
 
