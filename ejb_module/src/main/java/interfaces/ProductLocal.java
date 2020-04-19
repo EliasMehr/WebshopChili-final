@@ -12,5 +12,5 @@ public interface ProductLocal{
 
     void addToCart();
 
-    List<Product> searchProduct(String searchInput);
+    List<Product> searchProduct(String searchInput, List<Product> list);
 }

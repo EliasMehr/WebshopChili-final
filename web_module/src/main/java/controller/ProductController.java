@@ -19,7 +19,9 @@ public class ProductController implements Serializable {
     @EJB
     ProductLocal productSession;
 
-    private List<Product> productList, cartList = new ArrayList<>(), filteredProductList, secondList;
+    private List<Product> productList;
+    private List<Product> cartList = new ArrayList<>();
+    private List<Product> filteredProductList;
     private Product currentProduct;
     private String searchBox;
     private int currentProductCount;
@@ -28,16 +30,21 @@ public class ProductController implements Serializable {
 
     @PostConstruct
     public void init() {
-
         setProductList(productSession.loadAllProducts());
-        setSecondList(productList);
-
+        filteredProductList = productList;
     }
 
 
-    public void searchProduct(String search) {
-        System.out.println(search);
-        productList = productSession.searchProduct(search);
+    public void searchProduct(String searchInput) {
+        System.out.println(searchInput);
+//        productList = productSession.searchProduct(search, productList);
+//        if(searchInput.equals("")) {
+//            setFilteredProductList(productList);
+//        }
+
+        filteredProductList = productSession.searchProduct(searchInput, productList);
+
+
 
     }
 
@@ -89,14 +96,6 @@ public class ProductController implements Serializable {
         this.cartList = cartList;
     }
 
-    public List<Product> getFilteredProductList() {
-        return filteredProductList;
-    }
-
-    public void setFilteredProductList(List<Product> filteredProductList) {
-        this.filteredProductList = filteredProductList;
-    }
-
     public String getSearchBox() {
         return searchBox;
     }
@@ -105,11 +104,11 @@ public class ProductController implements Serializable {
         this.searchBox = searchBox;
     }
 
-    public List<Product> getSecondList() {
-        return secondList;
+    public List<Product> getFilteredProductList() {
+        return filteredProductList;
     }
 
-    public void setSecondList(List<Product> secondList) {
-        this.secondList = secondList;
+    public void setFilteredProductList(List<Product> filteredProductList) {
+        this.filteredProductList = filteredProductList;
     }
 }

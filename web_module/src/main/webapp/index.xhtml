@@ -43,7 +43,7 @@
 
 
     <!-- Lägger in produkter i grid (dynamisk) och visar de på sidan -->
-    <p:dataGrid id="productGrid" var="product" value="#{productController.productList}" columns="3"
+    <p:dataGrid id="productGrid" var="product" value="#{productController.filteredProductList}" columns="3"
                 styleClass="gridStyle" layout="grid"
                 paginator="true" paginatorPosition="bottom"
                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
