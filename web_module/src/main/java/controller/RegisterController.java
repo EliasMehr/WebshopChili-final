@@ -29,7 +29,12 @@ public class RegisterController implements Serializable {
 
         Role role = register.selectRole();
         User user = register.createUser(firstName, lastName, address, city, phone, email, password, role);
-        register.submit(user);
+
+        try {
+            register.submit(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

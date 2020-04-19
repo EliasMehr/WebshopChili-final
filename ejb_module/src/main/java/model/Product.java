@@ -3,12 +3,6 @@ package model;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/*
-    @Column without any name attribute is corresponding to the table name
-    in the SQL table i.e user table has following attribute @address and
-    the private field has the same name which mean that we dont need to
-    define the Column name with the @Column(name = "" ) value
- */
 
 @NamedQuery(name = "Product.findAll", query = "select p from Product p")
 
