@@ -24,7 +24,7 @@
             </p:submenu>
 
             <p:menuitem value="Kontakta"/>
-            <p:menuitem icon="pi pi-shopping-cart" />
+            <p:menuitem icon="pi pi-shopping-cart" onclick="PF('cartDialog').show()"/>
             <f:facet name="options">
                 <p:inputText style="margin: 1px 10px 1px 1px"
                              placeholder="Sök"
@@ -68,7 +68,7 @@
             <h:outputText value="#{productController.currentProduct.price}" suffix=" kr"/>
             <br/>
             <p:panelGrid columns="2">
-                <p:commandButton value="Köp" />
+                <p:commandButton value="Köp" action="#{productController.addToCart(productController.currentProduct.id)}" update="cartId"/>
                 <p:spinner  min="1" max="100" value="#{productController.currentProductCount}"  suffix="st"/>
             </p:panelGrid>
         </p:panelGrid>
@@ -93,6 +93,24 @@
                 <p:commandButton value="Skapa konto" action="register"/>
             </h:panelGrid>
         </h:form>
+    </p:dialog>
+
+    <!-- Popup dialog för cart -->
+    <p:dialog id="cartId" header="Varukorg" widgetVar="cartDialog">
+        <p:dataGrid  var="cart" columns="1" value="#{productController.cartList}">
+            <h:panelGrid columns="6" styleClass="cartGrid">
+                <p:outputLabel prefix="Produkt: " value="#{cart.name}"/>
+                <p:outputLabel suffix=" kr" value="#{cart.price}"/>
+                <p:outputLabel prefix="scoville: " value="#{cart.scoville_strength}"/>
+                <p:outputLabel prefix="antal: " value="#{productController.currentProductCount}"/>
+                <p:graphicImage library="images" name="#{cart.image_url}" styleClass="cartImage"/>
+                <p:commandButton icon="pi pi-times" action="#{productController.deleteFromCart(cart)}" update="cartId"/>
+            </h:panelGrid>
+        </p:dataGrid>
+        <h:panelGrid columns="2">
+        <p:commandButton icon="pi pi-check" value="Beställ"/>
+        <p:commandButton value="Töm varukorg" action="#{productController.emptyCart}" update="cartId"/>
+    </h:panelGrid>
     </p:dialog>
 
 

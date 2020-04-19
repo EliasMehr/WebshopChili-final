@@ -8,6 +8,8 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Named
@@ -17,14 +19,16 @@ public class ProductController implements Serializable {
     @EJB
     ProductLocal productSession;
 
-    private List<Product> productList;
+    private List<Product> productList, cartList = new ArrayList<>();
     private Product currentProduct;
     private int currentProductCount;
+
 
 
     @PostConstruct
     public void init() {
         setProductList(productSession.loadAllProducts());
+
     }
 
     public void modal(Product product) {
@@ -32,8 +36,21 @@ public class ProductController implements Serializable {
         setCurrentProduct(product);
     }
 
-    public void addToCart() {
+    // Testar mest för frontend
+    public void addToCart(Long id) {
+        Product cartProd;
+        System.out.println(id);
+        cartProd = productList.stream().filter(p -> p.getId().equals(id)).findAny().orElse(null);
+        System.out.println(cartProd.getName());
+        cartList.add(cartProd);
+    }
 
+    public void emptyCart() {
+        cartList.clear();
+    }
+
+    public void deleteFromCart(Product product) {
+        cartList.remove(product);
     }
 
 
@@ -61,4 +78,11 @@ public class ProductController implements Serializable {
         this.currentProduct = currentProduct;
     }
 
+    public List<Product> getCartList() {
+        return cartList;
+    }
+
+    public void setCartList(List<Product> cartList) {
+        this.cartList = cartList;
+    }
 }
