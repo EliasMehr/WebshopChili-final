@@ -35,14 +35,15 @@ public class ProductController implements Serializable {
 
 
     public void searchProduct(String searchInput) {
-
         filteredProductList = productSession.searchProduct(searchInput, productList);
-
     }
 
     // Testar mest för frontend - Ska fixas så ORDER - ORDERITEM finns i db
     public void addToCart(Long id) {
-        Product cartProd = productList.stream().filter(p -> p.getId().equals(id)).findAny().orElse(null);
+        Product cartProd = productList.stream()
+                .filter(p -> p.getId().equals(id))
+                .findAny()
+                .orElse(null);
         cartList.add(cartProd);
     }
 
