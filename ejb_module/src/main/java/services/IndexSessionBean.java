@@ -6,6 +6,7 @@ import model.Product;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,8 @@ public class IndexSessionBean implements IndexLocal {
 
         return list.stream()
                 .filter(product -> product.getName().toLowerCase().contains(searchInput.toLowerCase()))
+                .distinct()
+                .sorted(Comparator.comparing(Product::getName))
                 .collect(Collectors.toList());
     }
 
@@ -32,5 +35,6 @@ public class IndexSessionBean implements IndexLocal {
     @Override
     public void modal(Product product) {
         // Diskussion hur vi kan lösa det enklare
+
     }
 }

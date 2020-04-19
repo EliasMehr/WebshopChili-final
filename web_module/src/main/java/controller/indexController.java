@@ -27,11 +27,11 @@ public class indexController implements Serializable {
 
         try {
             products = indexSession.fetchProducts();
-            filteredProductList = indexSession.searchProduct(search, products);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+            filteredProductList = indexSession.searchProduct("j", products);
+            filteredProductList.forEach(e-> System.out.println(e.getName()));
     }
 
     public void modal(Product product) {
