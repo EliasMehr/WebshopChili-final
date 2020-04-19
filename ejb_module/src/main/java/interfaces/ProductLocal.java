@@ -11,4 +11,6 @@ public interface ProductLocal{
     List<Product> loadAllProducts();
 
     void addToCart();
+
+    List<Product> searchProduct(String searchInput, List<Product> list);
 }

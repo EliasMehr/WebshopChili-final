@@ -19,21 +19,32 @@ public class ProductController implements Serializable {
     @EJB
     ProductLocal productSession;
 
-    private List<Product> productList, cartList = new ArrayList<>();
+    private List<Product> productList, cartList = new ArrayList<>(), filteredProductList, secondList;
     private Product currentProduct;
+    private String searchBox;
     private int currentProductCount;
 
 
 
     @PostConstruct
     public void init() {
+
         setProductList(productSession.loadAllProducts());
+        setSecondList(productList);
 
     }
 
     public void modal(Product product) {
         System.out.println("CLICKED PRODUCT = " + product.getName());
         setCurrentProduct(product);
+    }
+
+    public void searchProduct(String search) {
+        System.out.println(search);
+        filteredProductList = productSession.searchProduct(search, secondList);
+        setProductList(filteredProductList);
+
+
     }
 
     // Testar mest för frontend
@@ -84,5 +95,29 @@ public class ProductController implements Serializable {
 
     public void setCartList(List<Product> cartList) {
         this.cartList = cartList;
+    }
+
+    public List<Product> getFilteredProductList() {
+        return filteredProductList;
+    }
+
+    public void setFilteredProductList(List<Product> filteredProductList) {
+        this.filteredProductList = filteredProductList;
+    }
+
+    public String getSearchBox() {
+        return searchBox;
+    }
+
+    public void setSearchBox(String searchBox) {
+        this.searchBox = searchBox;
+    }
+
+    public List<Product> getSecondList() {
+        return secondList;
+    }
+
+    public void setSecondList(List<Product> secondList) {
+        this.secondList = secondList;
     }
 }

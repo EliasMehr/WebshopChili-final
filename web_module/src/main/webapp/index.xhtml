@@ -28,9 +28,10 @@
             <f:facet name="options">
                 <p:inputText style="margin: 1px 10px 1px 1px"
                              placeholder="Sök"
-                             value="TBD"
+                             value="#{productController.searchBox}"
+                             update=""
                 >
-                    <p:ajax event="keyup" update=""/>
+                    <p:ajax event="keyup" update="productGrid" listener="#{productController.searchProduct(productController.searchBox)}"/>
                 </p:inputText>
                 <p:commandButton  value="Logga in" onclick="PF('loginDialog').show()"/> <!-- action="loggain.xhtml" -->
                 <p:commandButton action="register.xhtml" value="Registrera"/>
@@ -41,7 +42,7 @@
 
 
     <!-- Lägger in produkter i grid (dynamisk) och visar de på sidan -->
-    <p:dataGrid var="product" value="#{productController.productList}" columns="3" styleClass="gridStyle" layout="grid"
+    <p:dataGrid id="productGrid" var="product" value="#{productController.productList}" columns="3" styleClass="gridStyle" layout="grid"
                 paginator="true" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
     rowsPerPageTemplate="9" rows="9">
         <p:panel id="panel" header="#{product.name}" style="text-align:center">

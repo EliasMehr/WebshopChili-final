@@ -29,10 +29,4 @@ public class ProductDAO extends AbstractCRUD<Product>{
         super(Product.class);
     }
 
-    public List<Product> getAllProducts() {
-        TypedQuery<Product> typedQuery = em.createQuery("" +
-                "select p from Product p", Product.class);
-        return typedQuery.getResultList();
-    }
-
 }
