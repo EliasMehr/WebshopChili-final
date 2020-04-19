@@ -34,25 +34,17 @@ public class ProductController implements Serializable {
 
     }
 
-    public void modal(Product product) {
-        System.out.println("CLICKED PRODUCT = " + product.getName());
-        setCurrentProduct(product);
-    }
 
     public void searchProduct(String search) {
         System.out.println(search);
-        filteredProductList = productSession.searchProduct(search, secondList);
-        setProductList(filteredProductList);
-
+        productList = productSession.searchProduct(search);
 
     }
 
-    // Testar mest för frontend
+    // Testar mest för frontend - Ska fixas så ORDER - ORDERITEM finns i db
     public void addToCart(Long id) {
-        Product cartProd;
-        System.out.println(id);
-        cartProd = productList.stream().filter(p -> p.getId().equals(id)).findAny().orElse(null);
-        System.out.println(cartProd.getName());
+//        Product cartProd;
+        Product cartProd = productList.stream().filter(p -> p.getId().equals(id)).findAny().orElse(null);
         cartList.add(cartProd);
     }
 

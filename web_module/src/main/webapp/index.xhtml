@@ -46,7 +46,7 @@
                 paginator="true" paginatorPosition="bottom" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
     rowsPerPageTemplate="9" rows="9">
         <p:panel id="panel" header="#{product.name}" style="text-align:center">
-            <p:commandLink  oncomplete="PF('popup').show()" action="#{productController.modal(product)}" update="dialogId">
+            <p:commandLink  oncomplete="PF('popup').show()" action="#{productController.setCurrentProduct(product)}" update="dialogId">
                 <h:panelGrid id="productPanel" columns="1" styleClass="productDesign">
                     <p:graphicImage library="images" name="#{product.image_url}" styleClass="productImage" />
                     <p:outputLabel value="Scoville: #{product.scoville_strength}"/>

@@ -27,12 +27,11 @@ public class ProductSessionBean implements ProductLocal {
     }
 
     @Override
-    public List<Product> searchProduct(String searchInput, List<Product> list) {
-
+    public List<Product> searchProduct(String searchInput) {
+        List<Product> list = productDAO.findAll();
         return list.stream()
                 .filter(product -> product.getName().toLowerCase().contains(searchInput.toLowerCase()))
                 .distinct()
-                .sorted(Comparator.comparing(Product::getName))
                 .collect(Collectors.toList());
     }
 }
