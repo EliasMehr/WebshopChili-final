@@ -9,7 +9,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Named
@@ -23,7 +22,7 @@ public class ProductController implements Serializable {
     private List<Product> cartList = new ArrayList<>();
     private List<Product> filteredProductList;
     private Product currentProduct;
-    private String searchBox;
+    private String searchInput;
     private int currentProductCount;
 
 
@@ -36,21 +35,13 @@ public class ProductController implements Serializable {
 
 
     public void searchProduct(String searchInput) {
-        System.out.println(searchInput);
-//        productList = productSession.searchProduct(search, productList);
-//        if(searchInput.equals("")) {
-//            setFilteredProductList(productList);
-//        }
 
         filteredProductList = productSession.searchProduct(searchInput, productList);
-
-
 
     }
 
     // Testar mest för frontend - Ska fixas så ORDER - ORDERITEM finns i db
     public void addToCart(Long id) {
-//        Product cartProd;
         Product cartProd = productList.stream().filter(p -> p.getId().equals(id)).findAny().orElse(null);
         cartList.add(cartProd);
     }
@@ -96,12 +87,12 @@ public class ProductController implements Serializable {
         this.cartList = cartList;
     }
 
-    public String getSearchBox() {
-        return searchBox;
+    public String getSearchInput() {
+        return searchInput;
     }
 
-    public void setSearchBox(String searchBox) {
-        this.searchBox = searchBox;
+    public void setSearchInput(String searchInput) {
+        this.searchInput = searchInput;
     }
 
     public List<Product> getFilteredProductList() {

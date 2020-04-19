@@ -26,13 +26,13 @@
             <p:menuitem value="Kontakta"/>
             <p:menuitem icon="pi pi-shopping-cart" onclick="PF('cartDialog').show()"/>
             <f:facet name="options">
-                <p:inputText style="margin: 1px 10px 1px 1px"
+                <p:inputText styleClass="searchBox"
                              placeholder="Sök"
-                             value="#{productController.searchBox}"
+                             value="#{productController.searchInput}"
                              update=""
                 >
                     <p:ajax event="keyup" update="productGrid"
-                            listener="#{productController.searchProduct(productController.searchBox)}"/>
+                            listener="#{productController.searchProduct(productController.searchInput)}"/>
                 </p:inputText>
                 <p:commandButton value="Logga in" onclick="PF('loginDialog').show()"/> <!-- action="loggain.xhtml" -->
                 <p:commandButton onclick="PF('regDialog').show()" value="Registrera"/>
