@@ -32,13 +32,14 @@
                              placeholder="Sök"
                              value="#{productController.searchInput}"
                              update=""
+                             onkeypress="if (event.keyCode === 13) {return false; }"
                 >
                     <p:ajax event="keyup"
                             update="productGrid"
                             listener="#{productController.searchProduct(productController.searchInput)}"/>
                 </p:inputText>
                 <p:commandButton value="Logga in"
-                                 onclick="PF('loginDialog').show()"/> <!-- action="loggain.xhtml" -->
+                                 onclick="PF('loginDialog').show()"/>
                 <p:commandButton onclick="PF('regDialog').show()" value="Registrera"/>
             </f:facet>
 
