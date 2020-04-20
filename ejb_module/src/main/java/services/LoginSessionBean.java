@@ -29,6 +29,7 @@ public class LoginSessionBean implements LoginUserLocal {
         }
     }
 
+
     @Override
     public User requestUser(String username) {
         User user = userDAO.findByEmail(username);

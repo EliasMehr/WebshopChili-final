@@ -3,6 +3,7 @@ package controller;
 
 import interfaces.LoginUserLocal;
 import org.primefaces.PrimeFaces;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -20,6 +21,8 @@ public class LoginController implements Serializable {
     @EJB
     LoginUserLocal loginSession;
 
+
+
     public void login() {
         boolean isSuccessfullyLoggedIn = false;
         FacesMessage outputMessage = null;
@@ -34,7 +37,6 @@ public class LoginController implements Serializable {
         }
         FacesContext.getCurrentInstance().addMessage(null, outputMessage);
         PrimeFaces.current().ajax().addCallbackParam("isSuccessfullyLoggedIn", isSuccessfullyLoggedIn);
-
     }
 
     public String getUsername() {

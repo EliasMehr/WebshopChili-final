@@ -23,7 +23,7 @@ public class ProductSessionBean implements ProductLocal {
 
     @Override
     public void addToCart() {
-
+    // TODO
     }
 
     @Override
@@ -34,4 +34,5 @@ public class ProductSessionBean implements ProductLocal {
                 .sorted(Comparator.comparing(Product::getName))
                 .collect(Collectors.toList());
     }
+    
 }
