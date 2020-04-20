@@ -40,11 +40,11 @@ public class ProductController implements Serializable {
 
     // Testar mest för frontend - Ska fixas så ORDER - ORDERITEM finns i db
     public void addToCart(Long id) {
-        Product productItem = productList.stream()
-                                         .filter(p -> p.getId().equals(id))
-                                         .findAny().orElse(null);
-
-        cartList.add(productItem);
+        Product cartProd = productList.stream()
+                .filter(p -> p.getId().equals(id))
+                .findAny()
+                .orElse(null);
+        cartList.add(cartProd);
     }
 
     public void emptyCart() {

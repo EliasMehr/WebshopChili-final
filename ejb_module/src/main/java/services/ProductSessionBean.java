@@ -28,6 +28,7 @@ public class ProductSessionBean implements ProductLocal {
 
     @Override
     public List<Product> searchProduct(String searchInput, List<Product> list) {
+
        return list.stream()
                 .filter(product -> product.getName().toLowerCase().contains(searchInput.toLowerCase()))
                 .distinct()

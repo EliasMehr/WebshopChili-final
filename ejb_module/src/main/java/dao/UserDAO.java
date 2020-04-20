@@ -10,8 +10,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@RequestScoped
 @Named
+@RequestScoped
 public class UserDAO extends AbstractCRUD<User> {
 
     @PersistenceContext(unitName = "pUnit")

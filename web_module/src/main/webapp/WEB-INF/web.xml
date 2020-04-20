@@ -12,7 +12,7 @@
 
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>nova-dark</param-value>
+        <param-value>nova-light</param-value>
     </context-param>
 
     <servlet>

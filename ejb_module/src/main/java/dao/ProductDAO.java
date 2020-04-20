@@ -11,8 +11,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-// @EJB                         @Inject
-// ejb = stateless, ELLER CDI = @RequsetScoped /ApllicationScoped
 @Named
 @RequestScoped
 public class ProductDAO extends AbstractCRUD<Product>{
