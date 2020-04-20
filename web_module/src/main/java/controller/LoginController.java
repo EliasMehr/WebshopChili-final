@@ -39,6 +39,8 @@ public class LoginController implements Serializable {
         PrimeFaces.current().ajax().addCallbackParam("isSuccessfullyLoggedIn", isSuccessfullyLoggedIn);
     }
 
+
+
     public String getUsername() {
         return username;
     }
@@ -46,7 +48,6 @@ public class LoginController implements Serializable {
     public String getPassword() {
         return password;
     }
-
 
     public void setUsername(String username) {
         this.username = username;

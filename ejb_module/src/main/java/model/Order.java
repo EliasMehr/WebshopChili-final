@@ -48,20 +48,20 @@ public class Order implements Serializable {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public User getUser() {
+        return user;
     }
 
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public User getUser() {
-        return user;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public void setUser(User user) {

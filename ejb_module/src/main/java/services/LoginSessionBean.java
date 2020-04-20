@@ -5,12 +5,13 @@ import interfaces.LoginUserLocal;
 import model.User;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Stream;
 
-@Stateless
+@Stateful
 public class LoginSessionBean implements LoginUserLocal {
 
     @Inject

@@ -12,7 +12,7 @@ public interface ShoppingCartLocal {
     Order add(Order shoppingCart, Product selectedProduct, int quantity);
     Order remove(Order shoppingCart, OrderItem orderItem);
     Order clear(Order order);
-    boolean processOrder(Order order);
 
+    boolean processOrder(Order order);
     double updateOrderAmount (Order shoppingCart);
 }

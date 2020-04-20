@@ -2,9 +2,7 @@ package controller;
 
 import interfaces.ProductLocal;
 import interfaces.ShoppingCartLocal;
-import model.Order;
-import model.OrderItem;
-import model.Product;
+import model.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -13,6 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Named
@@ -21,6 +20,7 @@ public class ProductController implements Serializable {
 
     @EJB
     ProductLocal productSession;
+
     @EJB
     ShoppingCartLocal shoppingCartSession;
 
@@ -31,6 +31,8 @@ public class ProductController implements Serializable {
     private String searchInput;
     private int productQuantity;
     private double totalOrderAmount = 0;
+
+
 
     @PostConstruct
     public void init() {
@@ -45,8 +47,8 @@ public class ProductController implements Serializable {
 
 
     public void addToCart() {
-      shoppingCartOrder = shoppingCartSession.add(shoppingCartOrder, selectedProduct, productQuantity);
-      totalOrderAmount = shoppingCartSession.updateOrderAmount(shoppingCartOrder);
+        shoppingCartOrder = shoppingCartSession.add(shoppingCartOrder, selectedProduct, productQuantity);
+        totalOrderAmount = shoppingCartSession.updateOrderAmount(shoppingCartOrder);
     }
 
     public void emptyCart() {
@@ -59,7 +61,8 @@ public class ProductController implements Serializable {
         totalOrderAmount = shoppingCartSession.updateOrderAmount(shoppingCartOrder);
     }
 
-    public void processOrder(){
+    public void processOrder() {
+
         shoppingCartSession.processOrder(shoppingCartOrder);
         shoppingCartOrder = new Order();
     }

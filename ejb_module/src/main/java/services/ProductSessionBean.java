@@ -24,11 +24,6 @@ public class ProductSessionBean implements ProductLocal {
     }
 
     @Override
-    public void addToCart() {
-    // TODO
-    }
-
-    @Override
     public List<Product> searchProduct(String searchInput, List<Product> list) {
 
        return list.stream()

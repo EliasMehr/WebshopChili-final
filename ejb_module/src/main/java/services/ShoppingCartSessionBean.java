@@ -8,14 +8,15 @@ import model.Product;
 
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 import java.util.stream.Stream;
 
 @Stateless
 public class ShoppingCartSessionBean implements ShoppingCartLocal {
 
-//    @Inject
-//    private OrderDAO orderDAO;
+    @Inject
+    private OrderDAO orderDAO;
 
     @Override
     public Order add(Order shoppingCartOrder, Product selectedProduct, int quantity) {
@@ -42,19 +43,19 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
 
     @Override
     public boolean processOrder(Order order) {
-//        try {
-//            orderDAO.create(order);
-//            return true;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        return false;
+        try {
+            orderDAO.create(order);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public double updateOrderAmount(Order shoppingCart) {
-        return shoppingCart.getOrderItems().stream()
-                .mapToDouble(orderItem ->  orderItem.getPrice()*orderItem.getQuantity())
+        return shoppingCart.getOrderItems()
+                .stream()
+                .mapToDouble(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
                 .sum();
     }
 }
