@@ -61,7 +61,7 @@
                  header="#{product.name}"
                  style="text-align:center">
             <p:commandLink oncomplete="PF('popup').show()"
-                           action="#{productController.setCurrentProduct(product)}"
+                           action="#{productController.selectedProduct(product)}"
                            update="dialogId">
                 <h:panelGrid id="productPanel"
                              columns="1"
@@ -79,7 +79,7 @@
 
     <!--  Popup dialog när man klickar på en product  -->
     <p:dialog id="dialogId"
-              header="#{productController.currentProduct.name}"
+              header="#{productController.selectedProduct.name}"
               widgetVar="popup"
               showEffect="fade"
               hideEffect="fade"
@@ -88,20 +88,20 @@
             <p:panelGrid columns="1"
                          styleClass="panelGrid">
                 <h:graphicImage library="images"
-                                name="#{productController.currentProduct.image_url}"/>
+                                name="#{productController.selectedProduct.image_url}"/>
                 <h:outputText id="testId"
-                              value="#{productController.currentProduct.description}"/>
+                              value="#{productController.selectedProduct.description}"/>
                 <br/>
-                <h:outputText value="#{productController.currentProduct.price}"
+                <h:outputText value="#{productController.selectedProduct.price}"
                               suffix=" kr"/>
                 <br/>
                 <p:panelGrid columns="2">
                     <p:commandButton value="Köp"
-                                     action="#{productController.addToCart(productController.currentProduct.id)}"
+                                     action="#{productController.addToCart(productController.selectedProduct.id)}"
                                      update="cartId"/>
                     <p:spinner min="1"
                                max="100"
-                               value="#{productController.currentProductCount}"
+                               value="#{productController.productQuantity}"
                                suffix="st"/>
                 </p:panelGrid>
             </p:panelGrid>
@@ -166,12 +166,12 @@
                 <p:outputLabel prefix="scoville: "
                                value="#{cart.scoville_strength}"/>
                 <p:outputLabel prefix="antal: "
-                               value="#{productController.currentProductCount}"/>
+                               value="#{productController.productQuantity}"/>
                 <p:graphicImage library="images"
                                 name="#{cart.image_url}"
                                 styleClass="cartImage"/>
                 <p:commandButton icon="pi pi-times"
-                                 action="#{productController.deleteFromCart(cart)}"
+                                 action="#{productController.deleteCartItem(cart)}"
                                  update="cartId"
                                  oncomplete="PF('cartDialog').show()"/>
             </h:panelGrid>

@@ -21,9 +21,9 @@ public class ProductController implements Serializable {
     private List<Product> productList;
     private List<Product> cartList = new ArrayList<>();
     private List<Product> filteredProductList;
-    private Product currentProduct;
+    private Product selectedProduct;
     private String searchInput;
-    private int currentProductCount;
+    private int productQuantity;
 
 
 
@@ -40,28 +40,28 @@ public class ProductController implements Serializable {
 
     // Testar mest för frontend - Ska fixas så ORDER - ORDERITEM finns i db
     public void addToCart(Long id) {
-        Product cartProd = productList.stream()
+        Product productItem = productList.stream()
                 .filter(p -> p.getId().equals(id))
                 .findAny()
                 .orElse(null);
-        cartList.add(cartProd);
+        cartList.add(productItem);
     }
 
     public void emptyCart() {
         cartList.clear();
     }
 
-    public void deleteFromCart(Product product) {
+    public void deleteCartItem(Product product) {
         cartList.remove(product);
     }
 
 
-    public int getCurrentProductCount() {
-        return currentProductCount;
+    public int getProductQuantity() {
+        return productQuantity;
     }
 
-    public void setCurrentProductCount(int currentProductCount) {
-        this.currentProductCount = currentProductCount;
+    public void setProductQuantity(int productQuantity) {
+        this.productQuantity = productQuantity;
     }
 
     public List<Product> getProductList() {
@@ -72,12 +72,12 @@ public class ProductController implements Serializable {
         this.productList = productList;
     }
 
-    public Product getCurrentProduct() {
-        return currentProduct;
+    public Product getSelectedProduct() {
+        return selectedProduct;
     }
 
-    public void setCurrentProduct(Product currentProduct) {
-        this.currentProduct = currentProduct;
+    public void setSelectedProduct(Product selectedProduct) {
+        this.selectedProduct = selectedProduct;
     }
 
     public List<Product> getCartList() {
