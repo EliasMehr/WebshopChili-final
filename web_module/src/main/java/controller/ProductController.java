@@ -40,11 +40,9 @@ public class ProductController implements Serializable {
         filteredProductList = productList;
     }
 
-
     public void searchProduct() {
         filteredProductList = productSession.searchProduct(searchInput, productList);
     }
-
 
     public void addToCart() {
         shoppingCartOrder = shoppingCartSession.add(shoppingCartOrder, selectedProduct, productQuantity);
