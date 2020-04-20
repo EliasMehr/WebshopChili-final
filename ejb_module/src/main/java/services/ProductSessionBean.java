@@ -18,7 +18,9 @@ public class ProductSessionBean implements ProductLocal {
 
     @Override
     public List<Product> loadAllProducts() {
-        return productDAO.findAll();
+        return productDAO.findAll().stream()
+                .sorted(Comparator.comparing(Product::getName))
+                .collect(Collectors.toList());
     }
 
     @Override
