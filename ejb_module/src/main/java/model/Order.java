@@ -9,7 +9,7 @@ import java.util.List;
 @Entity(name = "orders")
 public class Order implements Serializable {
 
-    private static Long serialVersionUID = 1L;
+    private static final Long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)

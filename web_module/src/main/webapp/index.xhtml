@@ -35,7 +35,7 @@
                 >
                     <p:ajax event="keyup"
                             update="productGrid"
-                            listener="#{productController.searchProduct(productController.searchInput)}"/>
+                            listener="#{productController.searchProduct()}"/>
                 </p:inputText>
                 <p:commandButton value="Logga in"
                                  onclick="PF('loginDialog').show()"/> <!-- action="loggain.xhtml" -->
@@ -97,7 +97,7 @@
                 <br/>
                 <p:panelGrid columns="2">
                     <p:commandButton value="Köp"
-                                     action="#{productController.addToCart(productController.selectedProduct.id)}"
+                                     action="#{productController.addToCart()}"
                                      update="cartId"/>
                     <p:spinner min="1"
                                max="100"
@@ -154,31 +154,34 @@
     <p:dialog id="cartId"
               header="Varukorg"
               widgetVar="cartDialog">
-        <p:dataGrid var="cart"
+        <p:dataGrid var="item"
                     columns="1"
-                    value="#{productController.cartList}">
+                    value="#{productController.shoppingCartOrder.orderItems}">
             <h:panelGrid columns="6"
                          styleClass="cartGrid">
                 <p:outputLabel prefix="Produkt: "
-                               value="#{cart.name}"/>
+                               value="#{item.product.name}"/>
                 <p:outputLabel suffix=" kr"
-                               value="#{cart.price}"/>
+                               value="#{item.product.price}"/>
                 <p:outputLabel prefix="scoville: "
-                               value="#{cart.scoville_strength}"/>
+                               value="#{item.product.scoville_strength}"/>
                 <p:outputLabel prefix="antal: "
-                               value="#{productController.productQuantity}"/>
+                               value="#{item.quantity}"/>
                 <p:graphicImage library="images"
-                                name="#{cart.image_url}"
+                                name="#{item.product.image_url}"
                                 styleClass="cartImage"/>
                 <p:commandButton icon="pi pi-times"
-                                 action="#{productController.deleteCartItem(cart)}"
+                                 action="#{productController.deleteCartItem(item)}"
                                  update="cartId"
                                  oncomplete="PF('cartDialog').show()"/>
             </h:panelGrid>
         </p:dataGrid>
         <h:panelGrid columns="2">
+            <h:outputText value="Summa:"/>
+            <h:outputText value="#{productController.totalOrderAmount}"/>
             <p:commandButton icon="pi pi-check"
-                             value="Beställ"/>
+                             value="Beställ"
+                             action="#{productController.processOrder}"/>
             <p:commandButton value="Töm varukorg"
                              action="#{productController.emptyCart}"
                              update="cartId"
