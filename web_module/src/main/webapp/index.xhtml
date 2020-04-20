@@ -61,7 +61,7 @@
                  header="#{product.name}"
                  style="text-align:center">
             <p:commandLink oncomplete="PF('popup').show()"
-                           action="#{productController.selectedProduct(product)}"
+                           action="#{productController.selectedProduct()}"
                            update="dialogId">
                 <h:panelGrid id="productPanel"
                              columns="1"
