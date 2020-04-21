@@ -42,4 +42,8 @@
     margin: 1px 10px 1px 1px;
 }
 
+.ui-column-filter {
+    display: none !important;
+}
+
 

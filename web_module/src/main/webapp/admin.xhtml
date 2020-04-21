@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv='Content-Type' content='application/xhtml+xml; charset=UTF-8'/>
+    <title>Admin</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+</h:head>
+<h:body>
+    <f:metadata>
+        <f:viewAction action="#{adminController.fetchCustomers}"/>
+    </f:metadata>
+
+    <h:form>
+        <p:dataTable widgetVar="customerData"
+                     var="customer"
+                     value="#{adminController.customerList}"
+                     reflow="true"
+                     rows="10"
+                     paginator="10" filteredValue="#{adminController.filteredCustomer}">
+
+            <f:facet name="header">
+                <h:outputText value="Sök:"/>
+                <p:inputText onkeyup="PF('customerData').filter()" id="globalFilter" placeholder="Sök.."/>
+            </f:facet>
+
+            <p:column headerText="Förnamn" filterBy="#{customer.firstName}" filterMatchMode="contains">
+                <h:outputText value="#{customer.firstName}"/>
+            </p:column>
+
+            <p:column headerText="Efternamn" filterBy="#{customer.lastName}" filterMatchMode="contains">
+                <h:outputText value="#{customer.lastName}"/>
+            </p:column>
+
+            <p:column headerText="Email" filterBy="#{customer.email}" filterMatchMode="contains">
+                <h:outputText value="#{customer.email}"/>
+            </p:column>
+
+            <p:column headerText="Telefon" filterBy="#{customer.phone}" filterMatchMode="contains">
+                <h:outputText value="#{customer.phone}"/>
+            </p:column>
+
+            <p:column headerText="Adress" filterBy="#{customer.address}" filterMatchMode="contains">
+                <h:outputText value="#{customer.address}"/>
+            </p:column>
+
+            <p:column headerText="Stad" filterBy="#{customer.city}" filterMatchMode="contains">
+                <h:outputText value="#{customer.city}"/>
+            </p:column>
+
+            <p:column headerText="Typ av kund" filterBy="#{customer.role.type}" filterMatchMode="contains">
+                <h:outputText value="#{customer.role.type}"/>
+            </p:column>
+
+
+        </p:dataTable>
+    </h:form>
+
+    <p:dataView >
+
+    </p:dataView>
+
+
+    <h:outputScript library="js" name="script.js"/>
+</h:body>
+</html>

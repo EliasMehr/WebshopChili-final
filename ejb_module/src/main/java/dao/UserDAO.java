@@ -30,7 +30,11 @@ public class UserDAO extends AbstractCRUD<User> {
         TypedQuery<User> typedQuery = em.createNamedQuery("getUserByEmail" , User.class);
         typedQuery.setParameter("email", inputEmail);
         return typedQuery.getSingleResult();
+    }
 
+    public List<User> findAllCustomers() {
+        TypedQuery<User> typedQuery = em.createNamedQuery("User.getCustomers", User.class);
+        return typedQuery.getResultList();
     }
 
 
