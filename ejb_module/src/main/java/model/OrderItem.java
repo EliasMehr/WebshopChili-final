@@ -19,7 +19,7 @@ public class OrderItem implements Serializable {
     private Order order;
 
     //Unidirectional relationship, Product has no reference to OrderItem
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 

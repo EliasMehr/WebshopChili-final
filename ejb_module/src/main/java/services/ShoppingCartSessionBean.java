@@ -5,12 +5,10 @@ import interfaces.ShoppingCartLocal;
 import model.Order;
 import model.OrderItem;
 import model.Product;
-
-import javax.ejb.Stateful;
+import model.User;
 import javax.ejb.Stateless;
-import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
-import java.util.stream.Stream;
+import java.util.Date;
 
 @Stateless
 public class ShoppingCartSessionBean implements ShoppingCartLocal {
@@ -18,44 +16,64 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
     @Inject
     private OrderDAO orderDAO;
 
+    private User currentUser;
+    private Order currentOrder = new Order();
+
     @Override
-    public Order add(Order shoppingCartOrder, Product selectedProduct, int quantity) {
+    public Order add(Product selectedProduct, int quantity) {
         OrderItem orderItem = new OrderItem();
         orderItem.setProduct(selectedProduct);
         orderItem.setPrice(selectedProduct.getPrice());
         orderItem.setQuantity(quantity);
 
-        shoppingCartOrder.addOrderItem(orderItem);
-        return shoppingCartOrder;
+        currentOrder.addOrderItem(orderItem);
+        return currentOrder;
     }
 
     @Override
-    public Order remove(Order shoppingCartOrder, OrderItem orderItem) {
-        shoppingCartOrder.removeOrderItem(orderItem);
-        return shoppingCartOrder;
+    public Order remove(OrderItem orderItem) {
+        currentOrder.removeOrderItem(orderItem);
+        return currentOrder;
     }
 
     @Override
-    public Order clear(Order order) {
-        order.getOrderItems().clear();
-        return order;
+    public Order clear() {
+        currentOrder.getOrderItems().clear();
+        return currentOrder;
     }
 
     @Override
-    public boolean processOrder(Order order) {
+    public Order processOrder() {
         try {
-            orderDAO.create(order);
+            currentOrder.setDate(new Date());
+            currentUser.addOrder(currentOrder);
+            orderDAO.create(currentOrder);
+            currentOrder = new Order();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return currentOrder;
+    }
+
+    @Override
+    public double updateOrderAmount() {
+        return currentOrder.getOrderItems()
+                .stream()
+                .mapToDouble(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
+                .sum();
+    }
+
+    @Override
+    public void initializeUser(User user) {
+        currentUser = user;
+    }
+
+    @Override
+    public boolean isLoggedIn() {
+        if (currentUser == null) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public double updateOrderAmount(Order shoppingCart) {
-        return shoppingCart.getOrderItems()
-                .stream()
-                .mapToDouble(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
-                .sum();
-    }
 }

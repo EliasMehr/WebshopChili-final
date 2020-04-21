@@ -53,12 +53,13 @@ public class User implements Serializable {
     private String password;
 
     //Unidirectional relationship, Role has no reference to User
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Role role;
 
     //Bidirectional relationship, use methods addOrder and removeOrder
     @OneToMany(
+            fetch = FetchType.EAGER,
             mappedBy = "user",
             cascade = CascadeType.ALL, //We may want to change this
             orphanRemoval = true

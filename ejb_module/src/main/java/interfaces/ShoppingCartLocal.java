@@ -3,16 +3,24 @@ package interfaces;
 import model.Order;
 import model.OrderItem;
 import model.Product;
+import model.User;
 
 import javax.ejb.Local;
 
 @Local
 public interface ShoppingCartLocal {
 
-    Order add(Order shoppingCart, Product selectedProduct, int quantity);
-    Order remove(Order shoppingCart, OrderItem orderItem);
-    Order clear(Order order);
+    Order add(Product selectedProduct, int quantity);
 
-    boolean processOrder(Order order);
-    double updateOrderAmount (Order shoppingCart);
+    Order remove(OrderItem orderItem);
+
+    Order clear();
+
+    Order processOrder();
+
+    double updateOrderAmount();
+
+    void initializeUser(User user);
+
+    boolean isLoggedIn();
 }

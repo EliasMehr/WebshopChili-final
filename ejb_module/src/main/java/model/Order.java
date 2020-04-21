@@ -21,6 +21,7 @@ public class Order implements Serializable {
 
     //Bidirectional relationship, use methods addOrderItem and removeOrderItem
     @OneToMany(
+            fetch = FetchType.EAGER,
             mappedBy = "order",
             cascade = CascadeType.ALL,
             orphanRemoval = true

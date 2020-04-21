@@ -181,7 +181,7 @@
             <h:outputText value="#{productController.totalOrderAmount}"/>
             <p:commandButton icon="pi pi-check"
                              value="Beställ"
-                             action="#{productController.processOrder}"/>
+                             action="#{productController.checkout}"/>
             <p:commandButton value="Töm varukorg"
                              action="#{productController.emptyCart}"
                              update="cartId"

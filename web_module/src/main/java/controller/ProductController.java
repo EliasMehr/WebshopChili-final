@@ -6,12 +6,9 @@ import model.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.el.MethodExpression;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Named
@@ -32,8 +29,6 @@ public class ProductController implements Serializable {
     private int productQuantity;
     private double totalOrderAmount = 0;
 
-    LoginController loginController;
-
 
     @PostConstruct
     public void init() {
@@ -47,25 +42,28 @@ public class ProductController implements Serializable {
 
     public void addToCart() {
 
-        // User user = loginController.loginSession.requestUser("info@eliasmehr.se");
-
-        shoppingCartOrder = shoppingCartSession.add(shoppingCartOrder, selectedProduct, productQuantity);
-        totalOrderAmount = shoppingCartSession.updateOrderAmount(shoppingCartOrder);
+        shoppingCartOrder = shoppingCartSession.add(selectedProduct, productQuantity);
+        totalOrderAmount = shoppingCartSession.updateOrderAmount();
     }
 
     public void emptyCart() {
-        shoppingCartSession.clear(shoppingCartOrder);
-        totalOrderAmount = shoppingCartSession.updateOrderAmount(shoppingCartOrder);
+        shoppingCartSession.clear();
+        totalOrderAmount = shoppingCartSession.updateOrderAmount();
     }
 
     public void deleteCartItem(OrderItem orderItem) {
-        shoppingCartSession.remove(shoppingCartOrder, orderItem);
-        totalOrderAmount = shoppingCartSession.updateOrderAmount(shoppingCartOrder);
+        shoppingCartSession.remove(orderItem);
+        totalOrderAmount = shoppingCartSession.updateOrderAmount();
     }
 
-    public void processOrder() {
-        shoppingCartSession.processOrder(shoppingCartOrder);
-        shoppingCartOrder = new Order();
+    public void checkout() {
+        if (shoppingCartSession.isLoggedIn()) {
+            shoppingCartOrder = shoppingCartSession.processOrder();
+
+            // TODO Jessie ge oss snygga meddelanden att ordern är genomförd
+        } else {
+            // TODO Fixa en snygg meddelande att användaren inte är inloggad
+        }
     }
 
 
