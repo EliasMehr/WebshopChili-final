@@ -41,9 +41,9 @@ public class ProductController implements Serializable {
     }
 
     public void addToCart() {
-
         shoppingCartOrder = shoppingCartSession.add(selectedProduct, productQuantity);
         totalOrderAmount = shoppingCartSession.updateOrderAmount();
+        productQuantity = 1;
     }
 
     public void emptyCart() {

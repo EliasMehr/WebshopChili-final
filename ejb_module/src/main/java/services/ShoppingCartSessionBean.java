@@ -21,12 +21,24 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
 
     @Override
     public Order add(Product selectedProduct, int quantity) {
+        boolean isAlreadyCart = false;
+
+        for(OrderItem orderItem : currentOrder.getOrderItems()) {
+            if (orderItem.getProduct().equals(selectedProduct)) {
+                orderItem.setQuantity(orderItem.getQuantity() + quantity);
+                isAlreadyCart = true;
+            }
+        }
+
+        if (!isAlreadyCart) {
         OrderItem orderItem = new OrderItem();
         orderItem.setProduct(selectedProduct);
         orderItem.setPrice(selectedProduct.getPrice());
         orderItem.setQuantity(quantity);
 
         currentOrder.addOrderItem(orderItem);
+        }
+
         return currentOrder;
     }
 
