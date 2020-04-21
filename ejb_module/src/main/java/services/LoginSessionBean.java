@@ -35,7 +35,6 @@ public class LoginSessionBean implements LoginUserLocal {
     public User requestUser(String username) {
         User user = userDAO.findByEmail(username);
         return Stream.of(user).findFirst().orElse(null);
-
     }
 
     @Override

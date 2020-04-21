@@ -6,6 +6,8 @@ import model.User;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
 
@@ -29,8 +31,15 @@ public class RegisterController implements Serializable {
 
         Role role = register.selectRole();
         User user = register.createUser(firstName, lastName, address, city, phone, email, password, role);
-        register.submit(user);
 
+        FacesMessage outputMessage = null;
+
+        if (register.submit(user)) {
+            outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Tack, vi har mottagit din registrering", null);
+        } else {
+            outputMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Något gick fel med registreringen", null);
+        }
+        FacesContext.getCurrentInstance().addMessage(null, outputMessage);
     }
 
 

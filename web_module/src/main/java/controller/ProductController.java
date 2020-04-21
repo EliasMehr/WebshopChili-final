@@ -25,13 +25,14 @@ public class ProductController implements Serializable {
     ShoppingCartLocal shoppingCartSession;
 
     private List<Product> productList;
-    private Order shoppingCartOrder = new Order();
     private List<Product> filteredProductList;
+    private Order shoppingCartOrder = new Order();
     private Product selectedProduct;
     private String searchInput;
     private int productQuantity;
     private double totalOrderAmount = 0;
 
+    LoginController loginController;
 
 
     @PostConstruct
@@ -45,6 +46,9 @@ public class ProductController implements Serializable {
     }
 
     public void addToCart() {
+
+        // User user = loginController.loginSession.requestUser("info@eliasmehr.se");
+
         shoppingCartOrder = shoppingCartSession.add(shoppingCartOrder, selectedProduct, productQuantity);
         totalOrderAmount = shoppingCartSession.updateOrderAmount(shoppingCartOrder);
     }
@@ -60,7 +64,6 @@ public class ProductController implements Serializable {
     }
 
     public void processOrder() {
-
         shoppingCartSession.processOrder(shoppingCartOrder);
         shoppingCartOrder = new Order();
     }
