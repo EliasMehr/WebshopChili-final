@@ -26,7 +26,7 @@
                 <configuration>
                     <url>jdbc:mysql://localhost:3306/webshop_chili</url>
                     <user>root</user>
-                    <password>5Utrecht6</password>
+                    <password>majs</password>
                 </configuration>
                 <dependencies>
                     <dependency>
