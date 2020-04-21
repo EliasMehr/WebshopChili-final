@@ -27,7 +27,8 @@
 
             <f:facet name="header">
                 <h:outputText value="Sök:"/>
-                <p:inputText onkeyup="PF('customerData').filter()" id="globalFilter" placeholder="Sök.."/>
+                <p:inputText onkeyup="PF('customerData').filter()" id="globalFilter" placeholder="Sök.."
+                maxlength="40"/>
             </f:facet>
 
             <p:column headerText="Förnamn" filterBy="#{customer.firstName}" filterMatchMode="contains">
@@ -57,7 +58,6 @@
             <p:column headerText="Typ av kund" filterBy="#{customer.role.type}" filterMatchMode="contains">
                 <h:outputText value="#{customer.role.type}"/>
             </p:column>
-
 
         </p:dataTable>
     </h:form>
