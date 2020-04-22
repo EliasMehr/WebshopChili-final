@@ -97,7 +97,7 @@
                 <br/>
                 <p:panelGrid columns="2">
                     <p:commandButton value="Köp"
-                                     action="#{productController.addToCart(productController.selectedProduct.id)}"
+                                     action="#{productController.addToCart()}"
                                      update="cartId"/>
                     <p:spinner min="1"
                                max="100"
@@ -156,23 +156,23 @@
               widgetVar="cartDialog">
 
         <p:dataTable var="cart"
-                    value="#{productController.cartList}"
+                    value="#{productController.shoppingCartOrder.orderItems}"
                      scrollHeight="500"
                     tableStyle="table-layout: auto;"
         styleClass="cartStyle">
 
             <p:column headerText="Produkt">
-                <p:outputLabel value="#{cart.name}"/>
+                <p:outputLabel value="#{cart.product.name}"/>
             </p:column>
             <p:column headerText="Pris">
-                <p:outputLabel value="#{cart.price}"/>
+                <p:outputLabel value="#{cart.product.price}"/>
             </p:column>
             <p:column headerText="Antal">
-                <p:outputLabel value="#{productController.productQuantity}"/>
+                <p:outputLabel value="#{cart.quantity}"/>
             </p:column>
             <p:column headerText="Bild">
                 <p:graphicImage library="images"
-                                name="#{cart.image_url}"
+                                name="#{cart.product.image_url}"
                                 styleClass="cartImage"/>
             </p:column>
             <p:column headerText="Ta bort">
@@ -185,8 +185,10 @@
         </p:dataTable>
 
         <f:facet name="footer">
+            <h:outputText prefix="Summa:" value="#{productController.totalOrderAmount}"/>
             <p:commandButton icon="pi pi-check"
-                             value="Beställ"/>
+                             value="Beställ"
+                             action="#{productController.checkout}"/>
             <p:commandButton value="Töm varukorg"
                              action="#{productController.emptyCart}"
                              update="cartId"
