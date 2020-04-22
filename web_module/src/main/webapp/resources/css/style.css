@@ -9,4 +9,37 @@
     max-height: 150px;
 }
 
+.cartImage {
+    width: 70px;
+    height: 70px;
+}
+
+.panelGrid {
+    background: none;
+    margin: 0 auto;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.panelGrid, .panelGrid td, .panelGrid tr {
+    border: hidden;
+}
+
+.regHeader {
+    text-align: center;
+}
+
+.regButton {
+    align-self: center;
+}
+
+.cartGrid, .cartGrid tr, .cartGrid td {
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+.searchBox {
+    margin: 1px 10px 1px 1px;
+}
+
 
