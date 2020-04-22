@@ -42,4 +42,11 @@
     margin: 1px 10px 1px 1px;
 }
 
+.cartStyle {
+    max-height: 50vh;
+}
+
+.cartId {
+    overflow: auto;
+}
 

@@ -154,36 +154,45 @@
     <p:dialog id="cartId"
               header="Varukorg"
               widgetVar="cartDialog">
-        <p:dataGrid var="cart"
-                    columns="1"
-                    value="#{productController.cartList}">
-            <h:panelGrid columns="6"
-                         styleClass="cartGrid">
-                <p:outputLabel prefix="Produkt: "
-                               value="#{cart.name}"/>
-                <p:outputLabel suffix=" kr"
-                               value="#{cart.price}"/>
-                <p:outputLabel prefix="scoville: "
-                               value="#{cart.scoville_strength}"/>
-                <p:outputLabel prefix="antal: "
-                               value="#{productController.productQuantity}"/>
+
+        <p:dataTable var="cart"
+                    value="#{productController.cartList}"
+                     scrollHeight="500"
+                    tableStyle="table-layout: auto;"
+        styleClass="cartStyle">
+
+            <p:column headerText="Produkt">
+                <p:outputLabel value="#{cart.name}"/>
+            </p:column>
+            <p:column headerText="Pris">
+                <p:outputLabel value="#{cart.price}"/>
+            </p:column>
+            <p:column headerText="Antal">
+                <p:outputLabel value="#{productController.productQuantity}"/>
+            </p:column>
+            <p:column headerText="Bild">
                 <p:graphicImage library="images"
                                 name="#{cart.image_url}"
                                 styleClass="cartImage"/>
+            </p:column>
+            <p:column headerText="Ta bort">
                 <p:commandButton icon="pi pi-times"
                                  action="#{productController.deleteCartItem(cart)}"
                                  update="cartId"
                                  oncomplete="PF('cartDialog').show()"/>
-            </h:panelGrid>
-        </p:dataGrid>
-        <h:panelGrid columns="2">
+            </p:column>
+
+        </p:dataTable>
+
+        <f:facet name="footer">
             <p:commandButton icon="pi pi-check"
                              value="Beställ"/>
             <p:commandButton value="Töm varukorg"
                              action="#{productController.emptyCart}"
                              update="cartId"
                              oncomplete="PF('cartDialog').show()"/>
-        </h:panelGrid>
+        </f:facet>
+
     </p:dialog>
 
     <p:dialog id="regId" header="Registering" widgetVar="regDialog">
