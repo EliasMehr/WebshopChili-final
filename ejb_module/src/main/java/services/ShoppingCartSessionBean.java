@@ -82,10 +82,7 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
 
     @Override
     public boolean isLoggedIn() {
-        if (currentUser == null) {
-            return false;
-        }
-        return true;
+        return currentUser != null;
     }
 
 }
