@@ -2,6 +2,7 @@ package controller;
 
 import interfaces.AdminLocal;
 import model.Order;
+import model.OrderItem;
 import model.User;
 
 import javax.ejb.EJB;
@@ -21,6 +22,7 @@ public class AdminController implements Serializable{
     private List<User> customerList;
     private List<User> filteredCustomer;
     private Order clickedOrder;
+    private List<OrderItem> orderItemList;
 
     public void fetchCustomers() {
         setCustomerList(adminSession.loadAllCustomers());
@@ -57,5 +59,13 @@ public class AdminController implements Serializable{
 
     public void setClickedOrder(Order clickedOrder) {
         this.clickedOrder = clickedOrder;
+    }
+
+    public List<OrderItem> getOrderItemList() {
+        return orderItemList;
+    }
+
+    public void setOrderItemList(List<OrderItem> orderItemList) {
+        this.orderItemList = orderItemList;
     }
 }

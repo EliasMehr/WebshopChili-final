@@ -73,13 +73,17 @@
             <p:rowExpansion>
                 <p:dataTable var="customerOrder" value="#{customer.orders}">
 
-                    <p:column>
-                        <h:outputText value="Order number: "/>
-                        <p:commandLink value="#{customerOrder.id}"/>
+                    <p:column footerText="">
+                        <h:outputText value="Beställnings nummer: "/>
+                        <p:commandLink value="#{customerOrder.id}"
+                                       onclick="PF('ordersDialog').show()"
+                                       oncomplete="orderId">
+                            <f:actionListener binding="#{adminController.setOrderItemList(customerOrder.orderItems)}"/>
+                        </p:commandLink>
                     </p:column>
 
                     <p:column>
-                        <h:outputText value="Price: "/>
+                        <h:outputText value="Pris: "/>
                         <p:commandLink value="#{adminController.getPrice(customerOrder)}"/>
                     </p:column>
 
@@ -95,9 +99,24 @@
         </p:dataTable>
     </h:form>
 
-    <p:dataView >
+    <p:dialog widgetVar="ordersDialog" modal="true" id="orderId">
+        <h:form>
+            <p:dataGrid value="#{adminController.orderItemList}" var="orderProduct">
+                <h:panelGrid columns="1"
+                             styleClass="cartGrid">
+                    <p:graphicImage library="images"
+                                    name="#{orderProduct.product.image_url}"
+                                    styleClass="productImage"/>
+                    <p:outputLabel prefix="Produkt: " value="#{orderProduct.product.name}"/>
+                    <p:outputLabel prefix="Pris: " value="#{orderProduct.price}" suffix=" kr"/>
+                    <p:outputLabel prefix="Produkt Beskrivning: " value="#{orderProduct.product.description}"/>
+                    <p:outputLabel prefix="Scoville: " value="#{orderProduct.product.scoville_strength}"/>
 
-    </p:dataView>
+                </h:panelGrid>
+            </p:dataGrid>
+        </h:form>
+    </p:dialog>
+
 
 
     <h:outputScript library="js" name="script.js"/>
