@@ -23,7 +23,8 @@ public class LoginSessionBean implements LoginUserLocal {
 
     private User currentUser;
 
-    public LoginSessionBean() {}
+    public LoginSessionBean() {
+    }
 
     @Override
     public boolean login(String username, String password) {
@@ -33,11 +34,10 @@ public class LoginSessionBean implements LoginUserLocal {
                 currentUser = user;
                 return true;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-            return false;
+        return false;
     }
 
     @Override

@@ -7,7 +7,6 @@ import model.OrderItem;
 import model.Product;
 import model.User;
 
-import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.Date;
@@ -24,7 +23,7 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
     public Order add(Product selectedProduct, int quantity) {
         boolean isAlreadyCart = false;
 
-        for(OrderItem orderItem : currentOrder.getOrderItems()) {
+        for (OrderItem orderItem : currentOrder.getOrderItems()) {
             if (orderItem.getProduct().equals(selectedProduct)) {
                 orderItem.setQuantity(orderItem.getQuantity() + quantity);
                 isAlreadyCart = true;
@@ -32,12 +31,12 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
         }
 
         if (!isAlreadyCart) {
-        OrderItem orderItem = new OrderItem();
-        orderItem.setProduct(selectedProduct);
-        orderItem.setPrice(selectedProduct.getPrice());
-        orderItem.setQuantity(quantity);
+            OrderItem orderItem = new OrderItem();
+            orderItem.setProduct(selectedProduct);
+            orderItem.setPrice(selectedProduct.getPrice());
+            orderItem.setQuantity(quantity);
 
-        currentOrder.addOrderItem(orderItem);
+            currentOrder.addOrderItem(orderItem);
         }
 
         return currentOrder;
