@@ -26,7 +26,10 @@ import java.util.List;
  */
 
 @Entity
-@NamedQuery(name = "getUserByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
+@NamedQueries({
+        @NamedQuery(name = "getUserByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+        @NamedQuery(name = "User.getCustomers", query = "SELECT u FROM User u JOIN u.role r WHERE NOT r.id = 3")
+})
 public class User implements Serializable {
 
     private static Long serialVersionUID = 1L;

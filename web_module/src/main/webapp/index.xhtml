@@ -32,10 +32,12 @@
                              placeholder="Sök"
                              value="#{productController.searchInput}"
                              update=""
+                             onkeypress="if (event.keyCode === 13) {return false; }"
                 >
                     <p:ajax event="keyup"
                             update="productGrid"
-                            listener="#{productController.searchProduct()}"/>
+                            listener="#{productController.searchProduct}"
+                    />
                 </p:inputText>
                 <p:commandButton value="Logga in"
                                  onclick="PF('loginDialog').show()"/> <!-- action="loggain.xhtml" -->
@@ -154,31 +156,38 @@
     <p:dialog id="cartId"
               header="Varukorg"
               widgetVar="cartDialog">
-        <p:dataGrid var="item"
-                    columns="1"
-                    value="#{productController.shoppingCartOrder.orderItems}">
-            <h:panelGrid columns="6"
-                         styleClass="cartGrid">
-                <p:outputLabel prefix="Produkt: "
-                               value="#{item.product.name}"/>
-                <p:outputLabel suffix=" kr"
-                               value="#{item.product.price}"/>
-                <p:outputLabel prefix="scoville: "
-                               value="#{item.product.scoville_strength}"/>
-                <p:outputLabel prefix="antal: "
-                               value="#{item.quantity}"/>
+
+        <p:dataTable var="cart"
+                    value="#{productController.shoppingCartOrder.orderItems}"
+                     scrollHeight="500"
+                    tableStyle="table-layout: auto;"
+        styleClass="cartStyle">
+
+            <p:column headerText="Produkt">
+                <p:outputLabel value="#{cart.product.name}"/>
+            </p:column>
+            <p:column headerText="Pris">
+                <p:outputLabel value="#{cart.product.price}"/>
+            </p:column>
+            <p:column headerText="Antal">
+                <p:outputLabel value="#{cart.quantity}"/>
+            </p:column>
+            <p:column headerText="Bild">
                 <p:graphicImage library="images"
-                                name="#{item.product.image_url}"
+                                name="#{cart.product.image_url}"
                                 styleClass="cartImage"/>
+            </p:column>
+            <p:column headerText="Ta bort">
                 <p:commandButton icon="pi pi-times"
-                                 action="#{productController.deleteCartItem(item)}"
+                                 action="#{productController.deleteCartItem(cart)}"
                                  update="cartId"
                                  oncomplete="PF('cartDialog').show()"/>
-            </h:panelGrid>
-        </p:dataGrid>
-        <h:panelGrid columns="2">
-            <h:outputText value="Summa:"/>
-            <h:outputText value="#{productController.totalOrderAmount}"/>
+            </p:column>
+
+        </p:dataTable>
+
+        <f:facet name="footer">
+            <h:outputText prefix="Summa:" value="#{productController.totalOrderAmount}"/>
             <p:commandButton icon="pi pi-check"
                              value="Beställ"
                              action="#{productController.checkout}"/>
@@ -186,7 +195,8 @@
                              action="#{productController.emptyCart}"
                              update="cartId"
                              oncomplete="PF('cartDialog').show()"/>
-        </h:panelGrid>
+        </f:facet>
+
     </p:dialog>
 
     <p:dialog id="regId" header="Registering" widgetVar="regDialog">
@@ -199,21 +209,36 @@
 
                     <h:outputLabel for="fName" value="Förnamn:"/>
                     <p:inputText id="fName" label="fName" value="#{registerController.firstName}"
-                                 required="true" requiredMessage="Skriv ditt förnamn" maxlength="30"/>
+                                 required="true" requiredMessage="Skriv ditt förnamn" validatorMessage="Fel: Mellan 3-30 bokstäver" maxlength="30">
+                        <f:validateRegex pattern="[a-zA-Z]+"/>
+                        <f:validateLength minimum="3" maximum="30"/>
+                    </p:inputText>
+
                     <h:outputLabel for="lName" value="Efternamn:"/>
                     <p:inputText id="lName" label="lName" value="#{registerController.lastName}"
-                                 required="true" requiredMessage="Skriv ditt efternamn" maxlength="30"/>
+                                 required="true" requiredMessage="Skriv ditt efternamn" validatorMessage="Fel: Mellan 3-30 bokstäver" maxlength="30">
+                        <f:validateRegex pattern="[a-zA-Z]+"/>
+                        <f:validateLength minimum="3" maximum="30"/>
+                    </p:inputText>
 
                     <h:outputLabel for="address" value="Gata:"/>
                     <p:inputText id="address" label="address" value="#{registerController.address}"
-                                 required="true" requiredMessage="Skriv din adress" maxlength="30"/>
+                                 required="true" requiredMessage="Skriv din adress" validatorMessage="Fel: Mellan 3-30 bokstäver och siffror" maxlength="30">
+                        <f:validateRegex pattern="^[a-zA-Z0-9]+$"/>
+                        <f:validateLength minimum="3" maximum="30"/>
+                    </p:inputText>
+
                     <h:outputLabel for="city" value="Stad:"/>
                     <p:inputText id="city" label="city" value="#{registerController.city}"
-                                 required="true" requiredMessage="Skriv vilken stad" maxlength="30"/>
+                                 required="true" requiredMessage="Skriv vilken stad" validatorMessage="Fel: Mellan 3-30 bokstäver" maxlength="30">
+                        <f:validateRegex pattern="[a-zA-Z]+"/>
+                        <f:validateLength minimum="3" maximum="30"/>
+                    </p:inputText>
 
                     <h:outputLabel for="email" value="Mail:"/>
                     <p:inputText id="email" label="email" value="#{registerController.email}"
-                                 required="true" requiredMessage="Skriv din email" maxlength="50">
+                                 required="true" requiredMessage="Skriv din email" maxlength="50"
+                    validatorMessage="Felaktig inmatning [ex@ex.com]">
                         <f:validateRegex
                                 pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                     </p:inputText>
