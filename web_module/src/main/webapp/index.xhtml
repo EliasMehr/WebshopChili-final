@@ -170,7 +170,8 @@
                     value="#{productController.shoppingCartOrder.orderItems}"
                      scrollHeight="500"
                     tableStyle="table-layout: auto;"
-        styleClass="cartStyle">
+                    styleClass="cartStyle"
+                    emptyMessage="Din varukorg är tom :(">
 
             <p:column headerText="Produkt">
                 <p:outputLabel value="#{item.product.name}"/>
@@ -181,9 +182,9 @@
             </p:column>
 
             <p:column headerText="Antal">
-                <p:commandButton icon="pi pi-minus-circle" action="" update="cartQuantity"/>
+                <p:commandButton icon="pi pi-minus-circle" update="cartQuantity"/>
                 <p:outputLabel value="#{item.quantity}" id="cartQuantity"/>
-                <p:commandButton icon="pi pi-plus-circle" action="" update="cartQuantity"/>
+                <p:commandButton icon="pi pi-plus-circle" update="cartQuantity"/>
             </p:column>
 
             <p:column headerText="Bild">
