@@ -87,6 +87,9 @@
               hideEffect="fade"
               closeOnEscape="true">
         <h:form>
+            <p:growl id="growlProduct"
+                     showDetail="true"
+                     life="2000"/>
             <p:panelGrid columns="1"
                          styleClass="panelGrid">
                 <h:graphicImage library="images"
@@ -100,11 +103,13 @@
                 <p:panelGrid columns="2">
                     <p:commandButton value="Köp"
                                      action="#{productController.addToCart()}"
-                                     update="cartId"/>
+                                     update="cartId, growlProduct"
+                                     onclick="PF('popup').hide()"/>
                     <p:spinner min="1"
                                max="100"
                                value="#{productController.productQuantity}"
-                               suffix="st"/>
+                               suffix="st"
+                                />
                 </p:panelGrid>
             </p:panelGrid>
         </h:form>
@@ -157,44 +162,56 @@
               header="Varukorg"
               widgetVar="cartDialog">
 
-        <p:dataTable var="cart"
+        <p:growl id="growlCart"
+                 showDetail="true"
+                 life="2000"/>
+
+        <p:dataTable var="item"
                     value="#{productController.shoppingCartOrder.orderItems}"
                      scrollHeight="500"
                     tableStyle="table-layout: auto;"
-        styleClass="cartStyle">
+                    styleClass="cartStyle"
+                    emptyMessage="Din varukorg är tom :(">
 
             <p:column headerText="Produkt">
-                <p:outputLabel value="#{cart.product.name}"/>
+                <p:outputLabel value="#{item.product.name}"/>
             </p:column>
+
             <p:column headerText="Pris">
-                <p:outputLabel value="#{cart.product.price}"/>
+                <p:outputLabel value="#{item.product.price}"/>
             </p:column>
+
             <p:column headerText="Antal">
-                <p:outputLabel value="#{cart.quantity}"/>
+                <p:commandButton icon="pi pi-minus-circle" update="cartQuantity"/>
+                <p:outputLabel value="#{item.quantity}" id="cartQuantity"/>
+                <p:commandButton icon="pi pi-plus-circle" update="cartQuantity"/>
             </p:column>
+
             <p:column headerText="Bild">
                 <p:graphicImage library="images"
-                                name="#{cart.product.image_url}"
+                                name="#{item.product.image_url}"
                                 styleClass="cartImage"/>
             </p:column>
+
             <p:column headerText="Ta bort">
                 <p:commandButton icon="pi pi-times"
-                                 action="#{productController.deleteCartItem(cart)}"
-                                 update="cartId"
+                                 action="#{productController.deleteCartItem(item)}"
+                                 update="cartId, growlCart"
                                  oncomplete="PF('cartDialog').show()"/>
             </p:column>
 
         </p:dataTable>
 
         <f:facet name="footer">
-            <h:outputText prefix="Summa:" value="#{productController.totalOrderAmount}"/>
+            <h:outputText  value="Summa: #{productController.totalOrderAmount}"/>
             <p:commandButton icon="pi pi-check"
                              value="Beställ"
-                             action="#{productController.checkout}"/>
+                             action="#{productController.checkout}"
+                            update="growlCart"/>
             <p:commandButton value="Töm varukorg"
                              action="#{productController.emptyCart}"
                              update="cartId"
-                             oncomplete="PF('cartDialog').show()"/>
+                             oncomplete="PF('cartDialog').hide()"/>
         </f:facet>
 
     </p:dialog>

@@ -27,6 +27,7 @@
                      paginatorPosition="bottom"
                      filteredValue="#{adminController.filteredCustomer}"
                      rowExpandMode="single"
+                     emptyMessage="Inga kunder"
                      >
 
             <f:facet name="header">
@@ -71,7 +72,8 @@
 
             <!-- Child row, tar upp orders vid klick på kund -->
             <p:rowExpansion>
-                <p:dataTable var="customerOrder" value="#{customer.orders}">
+                <p:dataTable var="customerOrder" value="#{customer.orders}"
+                             emptyMessage="Inga ordrar finns">
 
                     <p:column footerText="">
                         <h:outputText value="Beställnings nummer: "/>

@@ -10,6 +10,7 @@ import org.primefaces.context.PrimeRequestContext;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
@@ -29,7 +30,6 @@ public class ProductController implements Serializable {
 
     @EJB
     LoginUserLocal loginSession;
-
 
     private List<Product> productList;
     private List<Product> filteredProductList;
@@ -77,12 +77,9 @@ public class ProductController implements Serializable {
     }
 
     public void checkout() {
-        PrimeFaces current = PrimeFaces.current();
         if (loginSession.isLoggedIn()) {
             shoppingCartOrder = shoppingCartSession.processOrder(loginSession.getUser());
-
-            setTotalOrderAmount(0);
-
+              PrimeFaces current = PrimeFaces.current();
             outputProduct = new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Beställning lyckades" , null);
             current.executeScript("PF('cartDialog').hide()");
