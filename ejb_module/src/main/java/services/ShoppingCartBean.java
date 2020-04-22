@@ -84,12 +84,14 @@ public class ShoppingCartBean implements ShoppingCartLocal {
 
     @Override
     public Order incrementItemQuantity(OrderItem item) {
-        currentOrder.getOrderItems()
-                .stream()
-                .filter(orderItem -> orderItem.equals(item))
-                .findAny()
-                .ifPresent(orderItem -> orderItem.setQuantity(item.getQuantity() +1));
 
+        if (item.getQuantity() < 100) {
+            currentOrder.getOrderItems()
+                    .stream()
+                    .filter(orderItem -> orderItem.equals(item))
+                    .findAny()
+                    .ifPresent(orderItem -> orderItem.setQuantity(item.getQuantity() + 1));
+        }
         return currentOrder;
     }
 

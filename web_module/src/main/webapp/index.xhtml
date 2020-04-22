@@ -170,10 +170,12 @@
 
         <p:dataTable var="item"
                     value="#{productController.shoppingCartOrder.orderItems}"
+
                      scrollHeight="500"
                     tableStyle="table-layout: auto;"
                     styleClass="cartStyle"
-                    emptyMessage="Din varukorg är tom :(">
+                    emptyMessage="Din varukorg är tom :("
+                    >
 
             <p:column headerText="Produkt">
                 <p:outputLabel value="#{item.product.name}"/>
@@ -184,9 +186,9 @@
             </p:column>
 
             <p:column headerText="Antal">
-                <p:commandButton icon="pi pi-minus-circle" action="#{productController.decrementOrderItemQuantity(item)}" update="cartQuantity"/>
+                <p:commandButton icon="pi pi-minus-circle" action="#{productController.decrementOrderItemQuantity(item)}" update="cartQuantity totalAmount"/>
                 <p:outputLabel value="#{item.quantity}" id="cartQuantity"/>
-                <p:commandButton icon="pi pi-plus-circle" action="#{productController.incrementOrderItemQuantiy(item)}" update="cartQuantity"/>
+                <p:commandButton icon="pi pi-plus-circle" action="#{productController.incrementOrderItemQuantiy(item)}" update="cartQuantity totalAmount"/>
             </p:column>
 
             <p:column headerText="Bild">
@@ -205,11 +207,11 @@
         </p:dataTable>
 
         <f:facet name="footer">
-            <h:outputText  value="Summa: #{productController.totalOrderAmount}"/>
+            <h:outputText  value="Summa: #{productController.totalOrderAmount}" id="totalAmount"/>
             <p:commandButton icon="pi pi-check"
                              value="Beställ"
                              action="#{productController.checkout}"
-                            update="growlCart"/>
+                             update="growlCart"/>
             <p:commandButton value="Töm varukorg"
                              action="#{productController.emptyCart}"
                              update="cartId"
