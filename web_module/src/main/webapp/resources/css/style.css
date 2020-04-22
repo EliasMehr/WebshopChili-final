@@ -42,8 +42,11 @@
     margin: 1px 10px 1px 1px;
 }
 
-.ui-column-filter {
-    display: none !important;
+.cartStyle {
+    max-height: 50vh;
 }
 
+.cartId {
+    overflow: auto;
+}
 
