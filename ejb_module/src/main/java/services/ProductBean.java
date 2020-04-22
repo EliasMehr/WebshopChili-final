@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Stateless
-public class ProductSessionBean implements ProductLocal {
+public class ProductBean implements ProductLocal {
 
     @Inject
     private ProductDAO productDAO;

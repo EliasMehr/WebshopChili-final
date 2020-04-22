@@ -1,6 +1,6 @@
 package controller;
 
-import interfaces.RegisterUserLocal;
+import interfaces.UserManagementLocal;
 import model.Role;
 import model.User;
 
@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class RegisterController implements Serializable {
 
     @EJB
-    RegisterUserLocal register;
+    UserManagementLocal userManagement;
 
     private String firstName;
     private String lastName;
@@ -29,12 +29,12 @@ public class RegisterController implements Serializable {
 
     public void register() {
 
-        Role role = register.selectRole();
-        User user = register.createUser(firstName, lastName, address, city, phone, email, password, role);
+        Role role = userManagement.selectRole();
+        User user = userManagement.createUser(firstName, lastName, address, city, phone, email, password, role);
 
         FacesMessage outputMessage = null;
 
-        if (register.submit(user)) {
+        if (userManagement.submit(user)) {
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Tack, vi har mottagit din registrering", null);
         } else {
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Något gick fel med registreringen", null);

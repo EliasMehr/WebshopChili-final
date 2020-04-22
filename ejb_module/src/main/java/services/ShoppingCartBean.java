@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import java.util.Date;
 
 @Stateless
-public class ShoppingCartSessionBean implements ShoppingCartLocal {
+public class ShoppingCartBean implements ShoppingCartLocal {
 
     @Inject
     private OrderDAO orderDAO;

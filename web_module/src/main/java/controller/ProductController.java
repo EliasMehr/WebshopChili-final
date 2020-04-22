@@ -1,19 +1,16 @@
 package controller;
 
-import interfaces.LoginUserLocal;
 import interfaces.ProductLocal;
 import interfaces.ShoppingCartLocal;
+import interfaces.UserManagementLocal;
 import model.*;
 import org.primefaces.PrimeFaces;
-import org.primefaces.context.PrimeRequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
@@ -29,7 +26,7 @@ public class ProductController implements Serializable {
     ShoppingCartLocal shoppingCartSession;
 
     @EJB
-    LoginUserLocal loginSession;
+    UserManagementLocal userManagement;
 
     private List<Product> productList;
     private List<Product> filteredProductList;
@@ -57,7 +54,7 @@ public class ProductController implements Serializable {
         productQuantity = 1;
 
         outputProduct = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                selectedProduct.getName() , " tillagd i varukorg");
+                selectedProduct.getName() , " Tillagd i varukorg");
         FacesContext.getCurrentInstance().addMessage(null, outputProduct);
 
     }
@@ -77,8 +74,8 @@ public class ProductController implements Serializable {
     }
 
     public void checkout() {
-        if (loginSession.isLoggedIn()) {
-            shoppingCartOrder = shoppingCartSession.processOrder(loginSession.getUser());
+        if (userManagement.isLoggedIn()) {
+            shoppingCartOrder = shoppingCartSession.processOrder(userManagement.getUser());
               PrimeFaces current = PrimeFaces.current();
             outputProduct = new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Beställning lyckades" , null);

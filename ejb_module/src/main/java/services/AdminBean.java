@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @Stateless
-public class AdminSessionBean implements AdminLocal {
+public class AdminBean implements AdminLocal {
 
 
     @Inject
