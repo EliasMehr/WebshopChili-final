@@ -1,5 +1,6 @@
 package controller;
 
+import interfaces.LoginUserLocal;
 import interfaces.ProductLocal;
 import interfaces.ShoppingCartLocal;
 import model.*;
@@ -7,6 +8,7 @@ import model.*;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
@@ -20,6 +22,9 @@ public class ProductController implements Serializable {
 
     @EJB
     ShoppingCartLocal shoppingCartSession;
+
+    @EJB
+    LoginUserLocal loginSession;
 
     private List<Product> productList;
     private List<Product> filteredProductList;
@@ -57,9 +62,8 @@ public class ProductController implements Serializable {
     }
 
     public void checkout() {
-        if (shoppingCartSession.isLoggedIn()) {
-            shoppingCartOrder = shoppingCartSession.processOrder();
-
+        if (loginSession.isLoggedIn()) {
+            shoppingCartOrder = shoppingCartSession.processOrder(loginSession.getUser());
             // TODO Jessie ge oss snygga meddelanden att ordern är genomförd
         } else {
             // TODO Fixa en snygg meddelande att användaren inte är inloggad

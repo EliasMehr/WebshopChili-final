@@ -8,10 +8,14 @@ import javax.ejb.Local;
 public interface LoginUserLocal {
 
 
-    boolean login(String username, String password);
-
     User requestUser(String username);
 
+    User getUser();
+
+    boolean login(String username, String password);
+
     boolean isCorrectPassword(User user, String password);
+
+    boolean isLoggedIn();
 
 }

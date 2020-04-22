@@ -6,6 +6,8 @@ import model.Order;
 import model.OrderItem;
 import model.Product;
 import model.User;
+
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.Date;
@@ -16,7 +18,6 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
     @Inject
     private OrderDAO orderDAO;
 
-    private User currentUser;
     private Order currentOrder = new Order();
 
     @Override
@@ -55,7 +56,7 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
     }
 
     @Override
-    public Order processOrder() {
+    public Order processOrder(User currentUser) {
         try {
             currentOrder.setDate(new Date());
             currentUser.addOrder(currentOrder);
@@ -73,16 +74,6 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
                 .stream()
                 .mapToDouble(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
                 .sum();
-    }
-
-    @Override
-    public void initializeUser(User user) {
-        currentUser = user;
-    }
-
-    @Override
-    public boolean isLoggedIn() {
-        return currentUser != null;
     }
 
 }

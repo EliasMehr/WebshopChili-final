@@ -15,14 +15,13 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Stream;
 
-@Stateful
+@Stateless
 public class LoginSessionBean implements LoginUserLocal {
 
     @Inject
     private UserDAO userDAO;
 
-    @EJB
-    ShoppingCartLocal shoppingCart;
+    private User currentUser;
 
     public LoginSessionBean() {}
 
@@ -30,12 +29,15 @@ public class LoginSessionBean implements LoginUserLocal {
     public boolean login(String username, String password) {
         try {
             User user = requestUser(username);
-            shoppingCart.initializeUser(user);
-            return isCorrectPassword(user, password);
+            if (isCorrectPassword(user, password)) {
+                currentUser = user;
+                return true;
+            }
         }
         catch (Exception e) {
-            return false;
+            e.printStackTrace();
         }
+            return false;
     }
 
     @Override
@@ -45,7 +47,19 @@ public class LoginSessionBean implements LoginUserLocal {
     }
 
     @Override
+    public User getUser() {
+        return currentUser;
+    }
+
+    @Override
     public boolean isCorrectPassword(User user, String password) {
         return Stream.of(user).anyMatch(userObject -> BCrypt.checkpw(password, user.getPassword()));
     }
+
+    @Override
+    public boolean isLoggedIn() {
+        return currentUser != null;
+    }
+
+
 }
