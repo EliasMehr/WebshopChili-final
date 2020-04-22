@@ -66,6 +66,8 @@ public class AdminController implements Serializable{
     }
 
     public void setOrderItemList(List<OrderItem> orderItemList) {
+
         this.orderItemList = orderItemList;
+        System.out.println(orderItemList.size());
     }
 }

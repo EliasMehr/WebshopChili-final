@@ -77,8 +77,9 @@
                         <h:outputText value="Beställnings nummer: "/>
                         <p:commandLink value="#{customerOrder.id}"
                                        onclick="PF('ordersDialog').show()"
-                                       oncomplete="orderId">
-                            <f:actionListener binding="#{adminController.setOrderItemList(customerOrder.orderItems)}"/>
+                                       update="orderTable"
+                                       >
+                            <f:actionListener binding="#{adminController.setOrderItemList(customerOrder.orderItems)}" />
                         </p:commandLink>
                     </p:column>
 
@@ -99,22 +100,28 @@
         </p:dataTable>
     </h:form>
 
+    <!-- Popup modal för att visa produkterna som finns i en Beställning -->
     <p:dialog widgetVar="ordersDialog" modal="true" id="orderId">
-        <h:form>
-            <p:dataGrid value="#{adminController.orderItemList}" var="orderProduct">
-                <h:panelGrid columns="1"
-                             styleClass="cartGrid">
+            <p:dataTable id="orderTable" value="#{adminController.orderItemList}" var="orderProduct" tableStyle="table-layout: auto">
+                <p:column headerText="Bild">
                     <p:graphicImage library="images"
                                     name="#{orderProduct.product.image_url}"
                                     styleClass="productImage"/>
-                    <p:outputLabel prefix="Produkt: " value="#{orderProduct.product.name}"/>
-                    <p:outputLabel prefix="Pris: " value="#{orderProduct.price}" suffix=" kr"/>
-                    <p:outputLabel prefix="Produkt Beskrivning: " value="#{orderProduct.product.description}"/>
-                    <p:outputLabel prefix="Scoville: " value="#{orderProduct.product.scoville_strength}"/>
-
-                </h:panelGrid>
-            </p:dataGrid>
-        </h:form>
+                </p:column>
+                <p:column headerText="Produkt">
+                    <h:outputText value="test"/>
+                    <h:outputText  value="#{orderProduct.product.name}"/>
+                </p:column>
+                <p:column headerText="Pris">
+                    <h:outputText prefix="Pris: " value="#{orderProduct.product.price}" suffix=" kr"/>
+                </p:column>
+                <p:column headerText="Info">
+                    <h:outputText prefix="Produkt Beskrivning: " value="#{orderProduct.product.description}"/>
+                </p:column>
+                <p:column headerText="Scoville">
+                    <h:outputText prefix="Scoville: " value="#{orderProduct.product.scoville_strength}"/>
+                </p:column>
+            </p:dataTable>
     </p:dialog>
 
 
