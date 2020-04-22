@@ -1,5 +1,6 @@
 package controller;
 
+import interfaces.LoginUserLocal;
 import interfaces.ProductLocal;
 import interfaces.ShoppingCartLocal;
 import model.*;
@@ -9,6 +10,7 @@ import org.primefaces.context.PrimeRequestContext;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
@@ -25,6 +27,9 @@ public class ProductController implements Serializable {
 
     @EJB
     ShoppingCartLocal shoppingCartSession;
+
+    @EJB
+    LoginUserLocal loginSession;
 
     private List<Product> productList;
     private List<Product> filteredProductList;
@@ -72,6 +77,9 @@ public class ProductController implements Serializable {
     }
 
     public void checkout() {
+        if (loginSession.isLoggedIn()) {
+            shoppingCartOrder = shoppingCartSession.processOrder(loginSession.getUser());
+            // TODO Jessie ge oss snygga meddelanden att ordern är genomförd
         PrimeFaces current = PrimeFaces.current();
         if (shoppingCartSession.isLoggedIn()) {
             shoppingCartOrder = shoppingCartSession.processOrder();

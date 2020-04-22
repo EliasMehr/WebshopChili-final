@@ -16,11 +16,8 @@ public interface ShoppingCartLocal {
 
     Order clear();
 
-    Order processOrder();
+    Order processOrder(User user);
 
     double updateOrderAmount();
 
-    void initializeUser(User user);
-
-    boolean isLoggedIn();
 }

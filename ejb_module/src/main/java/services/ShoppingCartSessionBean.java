@@ -6,6 +6,7 @@ import model.Order;
 import model.OrderItem;
 import model.Product;
 import model.User;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.Date;
@@ -16,14 +17,13 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
     @Inject
     private OrderDAO orderDAO;
 
-    private User currentUser;
     private Order currentOrder = new Order();
 
     @Override
     public Order add(Product selectedProduct, int quantity) {
         boolean isAlreadyCart = false;
 
-        for(OrderItem orderItem : currentOrder.getOrderItems()) {
+        for (OrderItem orderItem : currentOrder.getOrderItems()) {
             if (orderItem.getProduct().equals(selectedProduct)) {
                 orderItem.setQuantity(orderItem.getQuantity() + quantity);
                 isAlreadyCart = true;
@@ -31,12 +31,12 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
         }
 
         if (!isAlreadyCart) {
-        OrderItem orderItem = new OrderItem();
-        orderItem.setProduct(selectedProduct);
-        orderItem.setPrice(selectedProduct.getPrice());
-        orderItem.setQuantity(quantity);
+            OrderItem orderItem = new OrderItem();
+            orderItem.setProduct(selectedProduct);
+            orderItem.setPrice(selectedProduct.getPrice());
+            orderItem.setQuantity(quantity);
 
-        currentOrder.addOrderItem(orderItem);
+            currentOrder.addOrderItem(orderItem);
         }
 
         return currentOrder;
@@ -55,7 +55,7 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
     }
 
     @Override
-    public Order processOrder() {
+    public Order processOrder(User currentUser) {
         try {
             currentOrder.setDate(new Date());
             currentUser.addOrder(currentOrder);
@@ -73,19 +73,6 @@ public class ShoppingCartSessionBean implements ShoppingCartLocal {
                 .stream()
                 .mapToDouble(orderItem -> orderItem.getPrice() * orderItem.getQuantity())
                 .sum();
-    }
-
-    @Override
-    public void initializeUser(User user) {
-        currentUser = user;
-    }
-
-    @Override
-    public boolean isLoggedIn() {
-        if (currentUser == null) {
-            return false;
-        }
-        return true;
     }
 
 }
