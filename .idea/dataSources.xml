@@ -7,5 +7,11 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/webshop_chili</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="webshop_chili@localhost [2]" uuid="549ec812-1ba5-4cf5-bf25-f23e95ff1075">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/webshop_chili</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -18,8 +18,10 @@ public interface ShoppingCartLocal {
 
     Order processOrder(User user);
 
+    Order decrementItemQuantity(OrderItem item);
+
+    Order incrementItemQuantity(OrderItem item);
+
     double updateOrderAmount();
-
-
 
 }

@@ -10,6 +10,7 @@ import model.User;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.Date;
+import java.util.IllegalFormatCodePointException;
 
 @Stateless
 public class ShoppingCartBean implements ShoppingCartLocal {
@@ -64,6 +65,31 @@ public class ShoppingCartBean implements ShoppingCartLocal {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return currentOrder;
+    }
+
+    @Override
+    public Order decrementItemQuantity(OrderItem item) {
+
+        if (item.getQuantity() > 1) {
+            currentOrder.getOrderItems()
+                    .stream()
+                    .filter(orderItem -> orderItem.equals(item))
+                    .findAny()
+                    .ifPresent(orderItem -> orderItem.setQuantity(item.getQuantity() -1));
+        }
+
+        return currentOrder;
+    }
+
+    @Override
+    public Order incrementItemQuantity(OrderItem item) {
+        currentOrder.getOrderItems()
+                .stream()
+                .filter(orderItem -> orderItem.equals(item))
+                .findAny()
+                .ifPresent(orderItem -> orderItem.setQuantity(item.getQuantity() +1));
+
         return currentOrder;
     }
 

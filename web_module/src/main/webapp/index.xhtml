@@ -184,9 +184,9 @@
             </p:column>
 
             <p:column headerText="Antal">
-                <p:commandButton icon="pi pi-minus-circle" update="cartQuantity"/>
+                <p:commandButton icon="pi pi-minus-circle" action="#{productController.decrementOrderItemQuantity(item)}" update="cartQuantity"/>
                 <p:outputLabel value="#{item.quantity}" id="cartQuantity"/>
-                <p:commandButton icon="pi pi-plus-circle" update="cartQuantity"/>
+                <p:commandButton icon="pi pi-plus-circle" action="#{productController.incrementOrderItemQuantiy(item)}" update="cartQuantity"/>
             </p:column>
 
             <p:column headerText="Bild">

@@ -59,7 +59,6 @@ public class ProductController implements Serializable {
 
     }
 
-
     public void emptyCart() {
         shoppingCartSession.clear();
         totalOrderAmount = shoppingCartSession.updateOrderAmount();
@@ -73,6 +72,16 @@ public class ProductController implements Serializable {
 
     }
 
+    public void incrementOrderItemQuantiy(OrderItem item) {
+       shoppingCartOrder = shoppingCartSession.incrementItemQuantity(item);
+        totalOrderAmount = shoppingCartSession.updateOrderAmount();
+    }
+
+    public void decrementOrderItemQuantity(OrderItem item) {
+        shoppingCartOrder = shoppingCartSession.decrementItemQuantity(item);
+        totalOrderAmount = shoppingCartSession.updateOrderAmount();
+    }
+
     public void checkout() {
         if (userManagement.isLoggedIn()) {
             shoppingCartOrder = shoppingCartSession.processOrder(userManagement.getUser());
@@ -80,6 +89,7 @@ public class ProductController implements Serializable {
             outputProduct = new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Beställning lyckades" , null);
             current.executeScript("PF('cartDialog').hide()");
+            totalOrderAmount = 0;
         } else {
 
             outputProduct = new FacesMessage(FacesMessage.SEVERITY_WARN, "Måste logga in!" , null);
