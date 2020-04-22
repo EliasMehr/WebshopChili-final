@@ -27,6 +27,7 @@ public interface UserManagementLocal {
 
     boolean isLoggedIn();
 
+    void logOut();
 
 
 }

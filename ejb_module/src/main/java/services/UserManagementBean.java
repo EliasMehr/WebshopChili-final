@@ -7,6 +7,7 @@ import model.User;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.util.stream.Stream;
 
@@ -83,10 +84,18 @@ public class UserManagementBean implements UserManagementLocal {
     }
 
     @Override
+    public void logOut() {
+        currentUser = null;
+
+        FacesContext.getCurrentInstance()
+                    .getExternalContext()
+                    .invalidateSession();
+    }
+
+    @Override
     public User getUser() {
         return currentUser;
     }
-
 
 
 }

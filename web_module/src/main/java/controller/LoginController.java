@@ -36,6 +36,13 @@ public class LoginController implements Serializable {
         PrimeFaces.current().ajax().addCallbackParam("isSuccessfullyLoggedIn", isSuccessfullyLoggedIn);
     }
 
+    public void logOut() {
+        userManagement.logOut();
+
+        // TODO
+        // Visuell återkoppling att man loggats ut
+    }
+
     public String getUsername() {
         return username;
     }
