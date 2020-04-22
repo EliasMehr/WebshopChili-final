@@ -1,6 +1,7 @@
 package controller;
 
 import interfaces.AdminLocal;
+import model.Order;
 import model.User;
 
 import javax.ejb.EJB;
@@ -19,19 +20,18 @@ public class AdminController implements Serializable{
 
     private List<User> customerList;
     private List<User> filteredCustomer;
+    private Order clickedOrder;
 
     public void fetchCustomers() {
         setCustomerList(adminSession.loadAllCustomers());
     }
 
-    public boolean globalFilterFunction(Object customer, Object filter, Locale locale) {
-        String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
-        if (filterText == null || filterText.equals("")) {
-            return true;
-        }
 
-        User user = (User) customer;
-        return user.getFirstName().toLowerCase().contains(filterText);
+    public double getPrice(Order order) {
+        return order.getOrderItems()
+                .stream()
+                .mapToDouble(o -> o.getQuantity() * o.getPrice())
+                .sum();
 
     }
 
@@ -49,5 +49,13 @@ public class AdminController implements Serializable{
 
     public void setFilteredCustomer(List<User> filteredCustomer) {
         this.filteredCustomer = filteredCustomer;
+    }
+
+    public Order getClickedOrder() {
+        return clickedOrder;
+    }
+
+    public void setClickedOrder(Order clickedOrder) {
+        this.clickedOrder = clickedOrder;
     }
 }

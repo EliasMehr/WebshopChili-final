@@ -22,14 +22,24 @@
                      var="customer"
                      value="#{adminController.customerList}"
                      reflow="true"
-                     rows="10"
-                     paginator="10" filteredValue="#{adminController.filteredCustomer}">
+                     rows="20"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     filteredValue="#{adminController.filteredCustomer}"
+                     rowExpandMode="single"
+                     >
 
             <f:facet name="header">
                 <h:outputText value="Sök:"/>
                 <p:inputText onkeyup="PF('customerData').filter()" id="globalFilter" placeholder="Sök.."
                 maxlength="40"/>
             </f:facet>
+
+
+            <p:column style="width: 15px">
+                <p:rowToggler />
+            </p:column>
+
 
             <p:column headerText="Förnamn" filterBy="#{customer.firstName}" filterMatchMode="contains">
                 <h:outputText value="#{customer.firstName}"/>
@@ -58,6 +68,29 @@
             <p:column headerText="Typ av kund" filterBy="#{customer.role.type}" filterMatchMode="contains">
                 <h:outputText value="#{customer.role.type}"/>
             </p:column>
+
+            <!-- Child row, tar upp orders vid klick på kund -->
+            <p:rowExpansion>
+                <p:dataTable var="customerOrder" value="#{customer.orders}">
+
+                    <p:column>
+                        <h:outputText value="Order number: "/>
+                        <p:commandLink value="#{customerOrder.id}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="Price: "/>
+                        <p:commandLink value="#{adminController.getPrice(customerOrder)}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="Datum: "/>
+                        <h:outputText value="#{customerOrder.date}"/>
+                    </p:column>
+
+
+                </p:dataTable>
+            </p:rowExpansion>
 
         </p:dataTable>
     </h:form>
