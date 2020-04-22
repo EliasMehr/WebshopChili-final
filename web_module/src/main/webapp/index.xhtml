@@ -166,29 +166,35 @@
                  showDetail="true"
                  life="2000"/>
 
-        <p:dataTable var="cart"
+        <p:dataTable var="item"
                     value="#{productController.shoppingCartOrder.orderItems}"
                      scrollHeight="500"
                     tableStyle="table-layout: auto;"
         styleClass="cartStyle">
 
             <p:column headerText="Produkt">
-                <p:outputLabel value="#{cart.product.name}"/>
+                <p:outputLabel value="#{item.product.name}"/>
             </p:column>
+
             <p:column headerText="Pris">
-                <p:outputLabel value="#{cart.product.price}"/>
+                <p:outputLabel value="#{item.product.price}"/>
             </p:column>
+
             <p:column headerText="Antal">
-                <p:outputLabel value="#{cart.quantity}"/>
+                <p:commandButton icon="pi pi-minus-circle" action="" update="cartQuantity"/>
+                <p:outputLabel value="#{item.quantity}" id="cartQuantity"/>
+                <p:commandButton icon="pi pi-plus-circle" action="" update="cartQuantity"/>
             </p:column>
+
             <p:column headerText="Bild">
                 <p:graphicImage library="images"
-                                name="#{cart.product.image_url}"
+                                name="#{item.product.image_url}"
                                 styleClass="cartImage"/>
             </p:column>
+
             <p:column headerText="Ta bort">
                 <p:commandButton icon="pi pi-times"
-                                 action="#{productController.deleteCartItem(cart)}"
+                                 action="#{productController.deleteCartItem(item)}"
                                  update="cartId, growlCart"
                                  oncomplete="PF('cartDialog').show()"/>
             </p:column>
@@ -196,7 +202,7 @@
         </p:dataTable>
 
         <f:facet name="footer">
-            <h:outputText prefix="Summa:" value="#{productController.totalOrderAmount}"/>
+            <h:outputText  value="Summa: #{productController.totalOrderAmount}"/>
             <p:commandButton icon="pi pi-check"
                              value="Beställ"
                              action="#{productController.checkout}"
@@ -204,7 +210,7 @@
             <p:commandButton value="Töm varukorg"
                              action="#{productController.emptyCart}"
                              update="cartId"
-                             oncomplete="PF('cartDialog').show()"/>
+                             oncomplete="PF('cartDialog').hide()"/>
         </f:facet>
 
     </p:dialog>

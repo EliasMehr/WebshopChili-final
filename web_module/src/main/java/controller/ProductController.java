@@ -79,11 +79,7 @@ public class ProductController implements Serializable {
     public void checkout() {
         if (loginSession.isLoggedIn()) {
             shoppingCartOrder = shoppingCartSession.processOrder(loginSession.getUser());
-            // TODO Jessie ge oss snygga meddelanden att ordern är genomförd
-        PrimeFaces current = PrimeFaces.current();
-        if (shoppingCartSession.isLoggedIn()) {
-            shoppingCartOrder = shoppingCartSession.processOrder();
-
+              PrimeFaces current = PrimeFaces.current();
             outputProduct = new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Beställning lyckades" , null);
             current.executeScript("PF('cartDialog').hide()");
