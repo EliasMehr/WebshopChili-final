@@ -3,10 +3,15 @@ package controller;
 import interfaces.ProductLocal;
 import interfaces.ShoppingCartLocal;
 import model.*;
+import org.primefaces.PrimeFaces;
+import org.primefaces.context.PrimeRequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
@@ -28,6 +33,7 @@ public class ProductController implements Serializable {
     private String searchInput;
     private int productQuantity;
     private double totalOrderAmount = 0;
+    private FacesMessage outputProduct;
 
 
     @PostConstruct
@@ -44,6 +50,11 @@ public class ProductController implements Serializable {
         shoppingCartOrder = shoppingCartSession.add(selectedProduct, productQuantity);
         totalOrderAmount = shoppingCartSession.updateOrderAmount();
         productQuantity = 1;
+
+        outputProduct = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                selectedProduct.getName() , " tillagd i varukorg");
+        FacesContext.getCurrentInstance().addMessage(null, outputProduct);
+
     }
 
 
@@ -55,16 +66,26 @@ public class ProductController implements Serializable {
     public void deleteCartItem(OrderItem orderItem) {
         shoppingCartSession.remove(orderItem);
         totalOrderAmount = shoppingCartSession.updateOrderAmount();
+        outputProduct = new FacesMessage(FacesMessage.SEVERITY_ERROR, orderItem.getProduct().getName() , "Togs bort");
+        FacesContext.getCurrentInstance().addMessage(null, outputProduct);
+
     }
 
     public void checkout() {
+        PrimeFaces current = PrimeFaces.current();
         if (shoppingCartSession.isLoggedIn()) {
             shoppingCartOrder = shoppingCartSession.processOrder();
 
-            // TODO Jessie ge oss snygga meddelanden att ordern är genomförd
+            outputProduct = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Beställning lyckades" , null);
+            current.executeScript("PF('cartDialog').hide()");
         } else {
-            // TODO Fixa en snygg meddelande att användaren inte är inloggad
+
+            outputProduct = new FacesMessage(FacesMessage.SEVERITY_WARN, "Måste logga in!" , null);
         }
+
+        FacesContext.getCurrentInstance().addMessage(null, outputProduct);
+
     }
 
 

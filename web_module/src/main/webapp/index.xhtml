@@ -87,6 +87,9 @@
               hideEffect="fade"
               closeOnEscape="true">
         <h:form>
+            <p:growl id="growlProduct"
+                     showDetail="true"
+                     life="2000"/>
             <p:panelGrid columns="1"
                          styleClass="panelGrid">
                 <h:graphicImage library="images"
@@ -100,7 +103,8 @@
                 <p:panelGrid columns="2">
                     <p:commandButton value="Köp"
                                      action="#{productController.addToCart()}"
-                                     update="cartId"/>
+                                     update="cartId, growlProduct"
+                                     onclick="PF('popup').hide()"/>
                     <p:spinner min="1"
                                max="100"
                                value="#{productController.productQuantity}"
@@ -157,6 +161,10 @@
               header="Varukorg"
               widgetVar="cartDialog">
 
+        <p:growl id="growlCart"
+                 showDetail="true"
+                 life="2000"/>
+
         <p:dataTable var="cart"
                     value="#{productController.shoppingCartOrder.orderItems}"
                      scrollHeight="500"
@@ -180,7 +188,7 @@
             <p:column headerText="Ta bort">
                 <p:commandButton icon="pi pi-times"
                                  action="#{productController.deleteCartItem(cart)}"
-                                 update="cartId"
+                                 update="cartId, growlCart"
                                  oncomplete="PF('cartDialog').show()"/>
             </p:column>
 
@@ -190,7 +198,8 @@
             <h:outputText prefix="Summa:" value="#{productController.totalOrderAmount}"/>
             <p:commandButton icon="pi pi-check"
                              value="Beställ"
-                             action="#{productController.checkout}"/>
+                             action="#{productController.checkout}"
+                            update="growlCart"/>
             <p:commandButton value="Töm varukorg"
                              action="#{productController.emptyCart}"
                              update="cartId"
