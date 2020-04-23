@@ -21,7 +21,7 @@ public class LoginController implements Serializable {
     @EJB
     UserManagementLocal userManagement;
 
-    public void login() {
+    public String login() {
         boolean isSuccessfullyLoggedIn = false;
 
         if (userManagement.login(username, password)) {
@@ -34,6 +34,8 @@ public class LoginController implements Serializable {
         }
         FacesContext.getCurrentInstance().addMessage(null, outputMessage);
         PrimeFaces.current().ajax().addCallbackParam("isSuccessfullyLoggedIn", isSuccessfullyLoggedIn);
+
+        return userManagement.getProductOrAdminPage();
     }
 
     public void logOut() {
