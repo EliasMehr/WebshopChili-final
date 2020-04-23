@@ -51,7 +51,6 @@ public class LoginController implements Serializable {
         }
     }
 
-
     public void logOut() {
         userManagement.logOut();
 
