@@ -7,8 +7,10 @@ import org.primefaces.PrimeFaces;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 
 @Named
@@ -21,7 +23,7 @@ public class LoginController implements Serializable {
     @EJB
     UserManagementLocal userManagement;
 
-    public String login() {
+    public void login() {
         boolean isSuccessfullyLoggedIn = false;
 
         if (userManagement.login(username, password)) {
@@ -35,8 +37,20 @@ public class LoginController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, outputMessage);
         PrimeFaces.current().ajax().addCallbackParam("isSuccessfullyLoggedIn", isSuccessfullyLoggedIn);
 
-        return userManagement.getProductOrAdminPage();
+        ifAdminChangePage();
     }
+
+    private void ifAdminChangePage() {
+        if (userManagement.isAdmin()) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     public void logOut() {
         userManagement.logOut();

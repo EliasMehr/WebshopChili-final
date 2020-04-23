@@ -15,11 +15,9 @@
         <class>model.Product</class>
 
         <properties>
-
             <!-- DONT CHANGE THESE VALUES -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.show_sql" value="true"/>
-
         </properties>
     </persistence-unit>
 </persistence>

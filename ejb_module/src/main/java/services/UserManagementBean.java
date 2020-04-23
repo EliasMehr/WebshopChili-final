@@ -98,17 +98,13 @@ public class UserManagementBean implements UserManagementLocal {
     }
 
     @Override
-    public String getProductOrAdminPage() {
-        // If null
-        if (currentUser == null) {
-            return "index";
-        }
-        // If currentUser is Admin
+    public boolean isAdmin() {
         if (currentUser.getRole().getType().equals(Role.Type.ADMIN_USER)) {
-            return "admin";
+            // If currentUser is Admin
+            return true;
         } else {
-            // If currentUser is customer of any role type
-            return "index";
+            // If currentUser is customer of any role type or Null
+            return false;
         }
     }
 }

@@ -29,7 +29,7 @@ public interface UserManagementLocal {
 
     void logOut();
 
-    String getProductOrAdminPage();
+    boolean isAdmin();
 
 
 }
