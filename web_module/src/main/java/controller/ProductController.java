@@ -84,12 +84,16 @@ public class ProductController implements Serializable {
 
     public void checkout() {
         if (userManagement.isLoggedIn()) {
+            if (shoppingCartOrder.getOrderItems().size() > 0) {
             shoppingCartOrder = shoppingCartSession.processOrder(userManagement.getUser());
               PrimeFaces current = PrimeFaces.current();
             outputProduct = new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Beställning lyckades" , null);
             current.executeScript("PF('cartDialog').hide()");
             totalOrderAmount = 0;
+            } else {
+                outputProduct = new FacesMessage(FacesMessage.SEVERITY_WARN, "Du kan inte ha en tom order" , null);
+            }
         } else {
 
             outputProduct = new FacesMessage(FacesMessage.SEVERITY_WARN, "Måste logga in!" , null);
