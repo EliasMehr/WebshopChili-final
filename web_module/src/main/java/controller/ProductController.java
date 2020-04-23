@@ -35,7 +35,7 @@ public class ProductController implements Serializable {
     private String searchInput;
     private int productQuantity;
     private double totalOrderAmount = 0;
-    private FacesMessage outputProduct;
+    private FacesMessage outputMessage;
 
 
     @PostConstruct
@@ -53,9 +53,9 @@ public class ProductController implements Serializable {
         totalOrderAmount = shoppingCartSession.updateOrderAmount();
         productQuantity = 1;
 
-        outputProduct = new FacesMessage(FacesMessage.SEVERITY_INFO,
+        outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO,
                 selectedProduct.getName() , " Tillagd i varukorg");
-        FacesContext.getCurrentInstance().addMessage(null, outputProduct);
+        FacesContext.getCurrentInstance().addMessage(null, outputMessage);
 
     }
 
@@ -67,8 +67,8 @@ public class ProductController implements Serializable {
     public void deleteCartItem(OrderItem orderItem) {
         shoppingCartSession.remove(orderItem);
         totalOrderAmount = shoppingCartSession.updateOrderAmount();
-        outputProduct = new FacesMessage(FacesMessage.SEVERITY_ERROR, orderItem.getProduct().getName() , "Togs bort");
-        FacesContext.getCurrentInstance().addMessage(null, outputProduct);
+        outputMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, orderItem.getProduct().getName() , "Togs bort");
+        FacesContext.getCurrentInstance().addMessage(null, outputMessage);
 
     }
 
@@ -87,19 +87,19 @@ public class ProductController implements Serializable {
             if (shoppingCartOrder.getOrderItems().size() > 0) {
             shoppingCartOrder = shoppingCartSession.processOrder(userManagement.getUser());
               PrimeFaces current = PrimeFaces.current();
-            outputProduct = new FacesMessage(FacesMessage.SEVERITY_INFO,
+            outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Beställning lyckades" , null);
             current.executeScript("PF('cartDialog').hide()");
             totalOrderAmount = 0;
             } else {
-                outputProduct = new FacesMessage(FacesMessage.SEVERITY_WARN, "Du kan inte ha en tom order" , null);
+                outputMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Du kan inte ha en tom order" , null);
             }
         } else {
 
-            outputProduct = new FacesMessage(FacesMessage.SEVERITY_WARN, "Måste logga in!" , null);
+            outputMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Måste logga in!" , null);
         }
 
-        FacesContext.getCurrentInstance().addMessage(null, outputProduct);
+        FacesContext.getCurrentInstance().addMessage(null, outputMessage);
 
     }
 
