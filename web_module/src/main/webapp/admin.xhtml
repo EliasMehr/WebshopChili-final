@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv='Content-Type' content='application/xhtml+xml; charset=UTF-8'/>
+    <title>Admin</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+</h:head>
+<h:body>
+    <f:metadata>
+        <f:viewAction action="#{adminController.fetchCustomers}"/>
+    </f:metadata>
+
+    <h:form>
+        <!-- Visar alla kunder med sök funktion -->
+        <p:dataTable widgetVar="customerData"
+                     var="customer"
+                     value="#{adminController.customerList}"
+                     reflow="true"
+                     rows="20"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     filteredValue="#{adminController.filteredCustomer}"
+                     rowExpandMode="single"
+                     emptyMessage="Inga kunder"
+                     >
+
+            <f:facet name="header">
+                <h:outputText value="Sök:"/>
+                <p:inputText onkeyup="PF('customerData').filter()" id="globalFilter" placeholder="Sök.."
+                maxlength="40"/>
+            </f:facet>
+
+
+            <p:column style="width: 15px">
+                <p:rowToggler />
+            </p:column>
+
+
+            <p:column headerText="Förnamn" filterBy="#{customer.firstName}" filterMatchMode="contains">
+                <h:outputText value="#{customer.firstName}"/>
+            </p:column>
+
+            <p:column headerText="Efternamn" filterBy="#{customer.lastName}" filterMatchMode="contains">
+                <h:outputText value="#{customer.lastName}"/>
+            </p:column>
+
+            <p:column headerText="Email" filterBy="#{customer.email}" filterMatchMode="contains">
+                <h:outputText value="#{customer.email}"/>
+            </p:column>
+
+            <p:column headerText="Telefon" filterBy="#{customer.phone}" filterMatchMode="contains">
+                <h:outputText value="#{customer.phone}"/>
+            </p:column>
+
+            <p:column headerText="Adress" filterBy="#{customer.address}" filterMatchMode="contains">
+                <h:outputText value="#{customer.address}"/>
+            </p:column>
+
+            <p:column headerText="Stad" filterBy="#{customer.city}" filterMatchMode="contains">
+                <h:outputText value="#{customer.city}"/>
+            </p:column>
+
+            <p:column headerText="Typ av kund" filterBy="#{customer.role.type}" filterMatchMode="contains">
+                <h:outputText value="#{customer.role.type}"/>
+            </p:column>
+
+            <!-- Child row, tar upp orders vid klick på kund -->
+            <p:rowExpansion>
+                <p:dataTable var="customerOrder" value="#{customer.orders}"
+                             emptyMessage="Inga ordrar finns">
+
+                    <p:column footerText="">
+                        <h:outputText value="Beställnings nummer: "/>
+                        <p:commandLink value="#{customerOrder.id}"
+                                       onclick="PF('ordersDialog').show()"
+                                       update="orderTable"
+                                       >
+                            <f:actionListener binding="#{adminController.setOrderItemList(customerOrder.orderItems)}" />
+                        </p:commandLink>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="Pris: "/>
+                        <p:commandLink value="#{adminController.getPrice(customerOrder)}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="Datum: "/>
+                        <h:outputText value="#{customerOrder.date}"/>
+                    </p:column>
+
+
+                </p:dataTable>
+            </p:rowExpansion>
+
+        </p:dataTable>
+    </h:form>
+
+    <!-- Popup modal för att visa produkterna som finns i en Beställning -->
+    <p:dialog widgetVar="ordersDialog" modal="true" id="orderId">
+            <p:dataTable id="orderTable" value="#{adminController.orderItemList}" var="orderProduct" tableStyle="table-layout: auto">
+                <p:column headerText="Bild">
+                    <p:graphicImage library="images"
+                                    name="#{orderProduct.product.image_url}"
+                                    styleClass="productImage"/>
+                </p:column>
+                <p:column headerText="Produkt">
+                    <h:outputText value="test"/>
+                    <h:outputText  value="#{orderProduct.product.name}"/>
+                </p:column>
+                <p:column headerText="Pris">
+                    <h:outputText prefix="Pris: " value="#{orderProduct.product.price}" suffix=" kr"/>
+                </p:column>
+                <p:column headerText="Info">
+                    <h:outputText prefix="Produkt Beskrivning: " value="#{orderProduct.product.description}"/>
+                </p:column>
+                <p:column headerText="Scoville">
+                    <h:outputText prefix="Scoville: " value="#{orderProduct.product.scoville_strength}"/>
+                </p:column>
+            </p:dataTable>
+    </p:dialog>
+
+
+
+    <h:outputScript library="js" name="script.js"/>
+</h:body>
+</html>

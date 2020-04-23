@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Stateless
-public class ProductSessionBean implements ProductLocal {
+public class ProductBean implements ProductLocal {
 
     @Inject
     private ProductDAO productDAO;
@@ -24,18 +24,13 @@ public class ProductSessionBean implements ProductLocal {
     }
 
     @Override
-    public void addToCart() {
-    // TODO
-    }
-
-    @Override
     public List<Product> searchProduct(String searchInput, List<Product> list) {
 
-       return list.stream()
+        return list.stream()
                 .filter(product -> product.getName().toLowerCase().contains(searchInput.toLowerCase()))
                 .distinct()
                 .sorted(Comparator.comparing(Product::getName))
                 .collect(Collectors.toList());
     }
-    
+
 }

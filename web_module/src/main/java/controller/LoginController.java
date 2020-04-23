@@ -1,10 +1,9 @@
 package controller;
 
 
-import interfaces.LoginUserLocal;
-import org.primefaces.PrimeFaces;
-import org.springframework.core.env.SystemEnvironmentPropertySource;
 
+import interfaces.UserManagementLocal;
+import org.primefaces.PrimeFaces;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -17,26 +16,31 @@ import java.io.Serializable;
 public class LoginController implements Serializable {
     private String username;
     private String password;
+    private FacesMessage outputMessage;
 
     @EJB
-    LoginUserLocal loginSession;
-
-
+    UserManagementLocal userManagement;
 
     public void login() {
         boolean isSuccessfullyLoggedIn = false;
-        FacesMessage outputMessage = null;
 
-        if (loginSession.login(username, password)) {
+        if (userManagement.login(username, password)) {
             isSuccessfullyLoggedIn = true;
+
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Välkommen", username);
         }
         else {
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Fel användarnamn/lösenord");
-
         }
         FacesContext.getCurrentInstance().addMessage(null, outputMessage);
         PrimeFaces.current().ajax().addCallbackParam("isSuccessfullyLoggedIn", isSuccessfullyLoggedIn);
+    }
+
+    public void logOut() {
+        userManagement.logOut();
+
+        // TODO
+        // Visuell återkoppling att man loggats ut
     }
 
     public String getUsername() {
@@ -47,17 +51,12 @@ public class LoginController implements Serializable {
         return password;
     }
 
-
     public void setUsername(String username) {
         this.username = username;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setLoginSession(LoginUserLocal loginSession) {
-        this.loginSession = loginSession;
     }
 
 }

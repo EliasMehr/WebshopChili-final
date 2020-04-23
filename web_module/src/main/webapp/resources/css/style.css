@@ -10,8 +10,8 @@
 }
 
 .cartImage {
-    width: 70px;
-    height: 70px;
+    width: 5px;
+    height: 5px;
 }
 
 .panelGrid {
@@ -42,4 +42,11 @@
     margin: 1px 10px 1px 1px;
 }
 
+.cartStyle {
+    max-height: 50vh;
+}
+
+.cartId {
+    overflow: auto;
+}
 

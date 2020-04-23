@@ -1,6 +1,7 @@
 package dao;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.util.List;
 
 public abstract class AbstractCRUD<T> {
@@ -12,6 +13,9 @@ public abstract class AbstractCRUD<T> {
     }
 
     protected abstract EntityManager getEntityManager();
+
+    //protected EntityTransaction entityTransaction = getEntityManager().getTransaction();
+    //TODO Are transactions necessary with EJB?
 
     public void create(T entity) {
         getEntityManager().persist(entity);

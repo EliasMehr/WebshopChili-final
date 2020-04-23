@@ -26,13 +26,16 @@ import java.util.List;
  */
 
 @Entity
-@NamedQuery(name = "getUserByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
+@NamedQueries({
+        @NamedQuery(name = "getUserByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+        @NamedQuery(name = "User.getCustomers", query = "SELECT u FROM User u JOIN u.role r WHERE NOT r.id = 3")
+})
 public class User implements Serializable {
 
     private static Long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
@@ -53,12 +56,13 @@ public class User implements Serializable {
     private String password;
 
     //Unidirectional relationship, Role has no reference to User
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Role role;
 
     //Bidirectional relationship, use methods addOrder and removeOrder
     @OneToMany(
+            fetch = FetchType.EAGER,
             mappedBy = "user",
             cascade = CascadeType.ALL, //We may want to change this
             orphanRemoval = true
@@ -66,83 +70,84 @@ public class User implements Serializable {
     private List<Order> orders = new ArrayList<>();
 
 
-    public void addOrder(Order order){
+    public void addOrder(Order order) {
         orders.add(order);
         order.setUser(this);
     }
 
-    public void removeOrder(Order order){
+    public void removeOrder(Order order) {
         orders.remove(order);
         order.setUser(null);
     }
 
-
-
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getAddress() {
         return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getPhone() {
         return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Role getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public List<Order> getOrders() {
         return orders;
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
+
+
+

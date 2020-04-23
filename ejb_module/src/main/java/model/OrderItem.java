@@ -6,7 +6,7 @@ import java.io.Serializable;
 @Entity(name = "order_item")
 public class OrderItem implements Serializable {
 
-    private static Long serialVersionUID = 1L;
+    private static final Long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class OrderItem implements Serializable {
     private Order order;
 
     //Unidirectional relationship, Product has no reference to OrderItem
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 

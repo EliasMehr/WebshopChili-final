@@ -9,7 +9,7 @@ import java.util.List;
 @Entity(name = "orders")
 public class Order implements Serializable {
 
-    private static Long serialVersionUID = 1L;
+    private static final Long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -21,6 +21,7 @@ public class Order implements Serializable {
 
     //Bidirectional relationship, use methods addOrderItem and removeOrderItem
     @OneToMany(
+            fetch = FetchType.EAGER,
             mappedBy = "order",
             cascade = CascadeType.ALL,
             orphanRemoval = true
@@ -48,23 +49,31 @@ public class Order implements Serializable {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public User getUser() {
+        return user;
     }
 
     public List<OrderItem> getOrderItems() {
         return orderItems;
     }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -1,14 +1,18 @@
 package controller;
 
 import interfaces.ProductLocal;
-import model.Product;
+import interfaces.ShoppingCartLocal;
+import interfaces.UserManagementLocal;
+import model.*;
+import org.primefaces.PrimeFaces;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -18,13 +22,20 @@ public class ProductController implements Serializable {
     @EJB
     ProductLocal productSession;
 
+    @EJB
+    ShoppingCartLocal shoppingCartSession;
+
+    @EJB
+    UserManagementLocal userManagement;
+
     private List<Product> productList;
-    private List<Product> cartList = new ArrayList<>();
     private List<Product> filteredProductList;
+    private Order shoppingCartOrder = new Order();
     private Product selectedProduct;
     private String searchInput;
     private int productQuantity;
-
+    private double totalOrderAmount = 0;
+    private FacesMessage outputProduct;
 
 
     @PostConstruct
@@ -33,74 +44,131 @@ public class ProductController implements Serializable {
         filteredProductList = productList;
     }
 
-
-    public void searchProduct(String searchInput) {
+    public void searchProduct() {
         filteredProductList = productSession.searchProduct(searchInput, productList);
     }
 
-    // Testar mest för frontend - Ska fixas så ORDER - ORDERITEM finns i db
-    public void addToCart(Long id) {
-        Product productItem = productList.stream()
-                .filter(p -> p.getId().equals(id))
-                .findAny()
-                .orElse(null);
-        cartList.add(productItem);
+    public void addToCart() {
+        shoppingCartOrder = shoppingCartSession.add(selectedProduct, productQuantity);
+        totalOrderAmount = shoppingCartSession.updateOrderAmount();
+        productQuantity = 1;
+
+        outputProduct = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                selectedProduct.getName() , " Tillagd i varukorg");
+        FacesContext.getCurrentInstance().addMessage(null, outputProduct);
+
     }
 
     public void emptyCart() {
-        cartList.clear();
+        shoppingCartSession.clear();
+        totalOrderAmount = shoppingCartSession.updateOrderAmount();
     }
 
-    public void deleteCartItem(Product product) {
-        cartList.remove(product);
+    public void deleteCartItem(OrderItem orderItem) {
+        shoppingCartSession.remove(orderItem);
+        totalOrderAmount = shoppingCartSession.updateOrderAmount();
+        outputProduct = new FacesMessage(FacesMessage.SEVERITY_ERROR, orderItem.getProduct().getName() , "Togs bort");
+        FacesContext.getCurrentInstance().addMessage(null, outputProduct);
+
+    }
+
+    public void incrementOrderItemQuantiy(OrderItem item) {
+       shoppingCartOrder = shoppingCartSession.incrementItemQuantity(item);
+        totalOrderAmount = shoppingCartSession.updateOrderAmount();
+    }
+
+    public void decrementOrderItemQuantity(OrderItem item) {
+        shoppingCartOrder = shoppingCartSession.decrementItemQuantity(item);
+        totalOrderAmount = shoppingCartSession.updateOrderAmount();
+    }
+
+    public void checkout() {
+        if (userManagement.isLoggedIn()) {
+            shoppingCartOrder = shoppingCartSession.processOrder(userManagement.getUser());
+              PrimeFaces current = PrimeFaces.current();
+            outputProduct = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Beställning lyckades" , null);
+            current.executeScript("PF('cartDialog').hide()");
+            totalOrderAmount = 0;
+        } else {
+
+            outputProduct = new FacesMessage(FacesMessage.SEVERITY_WARN, "Måste logga in!" , null);
+        }
+
+        FacesContext.getCurrentInstance().addMessage(null, outputProduct);
+
     }
 
 
-    public int getProductQuantity() {
-        return productQuantity;
+    public ProductLocal getProductSession() {
+        return productSession;
     }
 
-    public void setProductQuantity(int productQuantity) {
-        this.productQuantity = productQuantity;
+    public ShoppingCartLocal getShoppingCartSession() {
+        return shoppingCartSession;
     }
 
     public List<Product> getProductList() {
         return productList;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
-
-    public Product getSelectedProduct() {
-        return selectedProduct;
-    }
-
-    public void setSelectedProduct(Product selectedProduct) {
-        this.selectedProduct = selectedProduct;
-    }
-
-    public List<Product> getCartList() {
-        return cartList;
-    }
-
-    public void setCartList(List<Product> cartList) {
-        this.cartList = cartList;
-    }
-
-    public String getSearchInput() {
-        return searchInput;
-    }
-
-    public void setSearchInput(String searchInput) {
-        this.searchInput = searchInput;
+    public Order getShoppingCartOrder() {
+        return shoppingCartOrder;
     }
 
     public List<Product> getFilteredProductList() {
         return filteredProductList;
     }
 
+    public Product getSelectedProduct() {
+        return selectedProduct;
+    }
+
+    public String getSearchInput() {
+        return searchInput;
+    }
+
+    public int getProductQuantity() {
+        return productQuantity;
+    }
+
+    public double getTotalOrderAmount() {
+        return totalOrderAmount;
+    }
+
+    public void setProductSession(ProductLocal productSession) {
+        this.productSession = productSession;
+    }
+
+    public void setShoppingCartSession(ShoppingCartLocal shoppingCartSession) {
+        this.shoppingCartSession = shoppingCartSession;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+
+    public void setShoppingCartOrder(Order shoppingCartOrder) {
+        this.shoppingCartOrder = shoppingCartOrder;
+    }
+
     public void setFilteredProductList(List<Product> filteredProductList) {
         this.filteredProductList = filteredProductList;
+    }
+
+    public void setSelectedProduct(Product selectedProduct) {
+        this.selectedProduct = selectedProduct;
+    }
+
+    public void setSearchInput(String searchInput) {
+        this.searchInput = searchInput;
+    }
+
+    public void setProductQuantity(int productQuantity) {
+        this.productQuantity = productQuantity;
+    }
+
+    public void setTotalOrderAmount(double totalOrderAmount) {
+        this.totalOrderAmount = totalOrderAmount;
     }
 }
