@@ -226,33 +226,35 @@
                 <p:messages>
                     <p:autoUpdate/>
                 </p:messages>
+                <p:growl id="growlReg" life="2000" showDetail="true"/>
+
                 <p:panelGrid columns="4" cellpadding="5" styleClass="panelGrid">
 
                     <h:outputLabel for="fName" value="Förnamn:"/>
                     <p:inputText id="fName" label="fName" value="#{registerController.firstName}"
                                  required="true" requiredMessage="Skriv ditt förnamn" validatorMessage="Fel: Mellan 3-30 bokstäver" maxlength="30">
-                        <f:validateRegex pattern="[a-zA-Z]+"/>
+                        <f:validateRegex pattern="[a-öA-Ö]+"/>
                         <f:validateLength minimum="3" maximum="30"/>
                     </p:inputText>
 
                     <h:outputLabel for="lName" value="Efternamn:"/>
                     <p:inputText id="lName" label="lName" value="#{registerController.lastName}"
                                  required="true" requiredMessage="Skriv ditt efternamn" validatorMessage="Fel: Mellan 3-30 bokstäver" maxlength="30">
-                        <f:validateRegex pattern="[a-zA-Z]+"/>
+                        <f:validateRegex pattern="[a-öA-Ö]+"/>
                         <f:validateLength minimum="3" maximum="30"/>
                     </p:inputText>
 
                     <h:outputLabel for="address" value="Gata:"/>
                     <p:inputText id="address" label="address" value="#{registerController.address}"
                                  required="true" requiredMessage="Skriv din adress" validatorMessage="Fel: Mellan 3-30 bokstäver och siffror" maxlength="30">
-                        <f:validateRegex pattern="^[a-zA-Z0-9]+$"/>
+                        <f:validateRegex pattern="^[a-öA-Ö0-9]+$"/>
                         <f:validateLength minimum="3" maximum="30"/>
                     </p:inputText>
 
                     <h:outputLabel for="city" value="Stad:"/>
                     <p:inputText id="city" label="city" value="#{registerController.city}"
                                  required="true" requiredMessage="Skriv vilken stad" validatorMessage="Fel: Mellan 3-30 bokstäver" maxlength="30">
-                        <f:validateRegex pattern="[a-zA-Z]+"/>
+                        <f:validateRegex pattern="[a-öA-Ö]+"/>
                         <f:validateLength minimum="3" maximum="30"/>
                     </p:inputText>
 
@@ -277,7 +279,7 @@
 
                 </p:panelGrid>
                 <p:commandButton action="#{registerController.register}" value="Registrera" ajax="true"
-                                 icon="pi pi-check" validateClient="true" styleClass="regButton"
+                                 icon="pi pi-check" validateClient="true" styleClass="regButton" update="growlReg"
                                  oncomplete="if (args &amp;&amp; !args.validationFailed) PF('regDialog').hide()"/>
                 <p:commandButton onclick="PF('regDialog').hide()" value="Avbryt" styleClass="regButton" immediate="true"/>
             </p:panel>
