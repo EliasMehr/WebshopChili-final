@@ -247,7 +247,7 @@
                     <h:outputLabel for="address" value="Gata:"/>
                     <p:inputText id="address" label="address" value="#{registerController.address}"
                                  required="true" requiredMessage="Skriv din adress" validatorMessage="Fel: Mellan 3-30 bokstäver och siffror" maxlength="30">
-                        <f:validateRegex pattern="^[a-öA-Ö0-9]+$"/>
+                        <f:validateRegex pattern="^[a-öA-Ö0-9_ ]*$"/>
                         <f:validateLength minimum="3" maximum="30"/>
                     </p:inputText>
 
