@@ -29,6 +29,4 @@ public interface UserManagementLocal {
 
     void logOut();
 
-    boolean isAdmin();
-
 }

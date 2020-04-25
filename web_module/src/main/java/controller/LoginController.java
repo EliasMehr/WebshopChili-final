@@ -1,14 +1,15 @@
 package controller;
 
 
-
 import interfaces.UserManagementLocal;
+import model.Role;
 import org.primefaces.PrimeFaces;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
@@ -19,6 +20,10 @@ public class LoginController implements Serializable {
     private String username;
     private String password;
     private FacesMessage outputMessage;
+//    private FacesContext.getCurrentInstance()
+
+    @Inject
+    private ProductController productController;
 
     @EJB
     UserManagementLocal userManagement;
@@ -30,24 +35,25 @@ public class LoginController implements Serializable {
             isSuccessfullyLoggedIn = true;
 
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Välkommen", username);
-        }
-        else {
+
+            if (userManagement.getUser().getRole().getType() == Role.Type.ADMIN_USER) {
+                redirectToAdminPage();
+            } else {
+                productController.updateProductPricing();
+            }
+
+        } else {
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Fel användarnamn/lösenord");
         }
         FacesContext.getCurrentInstance().addMessage(null, outputMessage);
         PrimeFaces.current().ajax().addCallbackParam("isSuccessfullyLoggedIn", isSuccessfullyLoggedIn);
-
-        ifAdminChangePage();
     }
 
-    private void ifAdminChangePage() {
-        if (userManagement.isAdmin()) {
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    private void redirectToAdminPage() {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("admin.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

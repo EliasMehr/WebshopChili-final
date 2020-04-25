@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.Date;
 import java.util.IllegalFormatCodePointException;
+import java.util.stream.Stream;
 
 @Stateless
 public class ShoppingCartBean implements ShoppingCartLocal {
@@ -103,4 +104,9 @@ public class ShoppingCartBean implements ShoppingCartLocal {
                 .sum();
     }
 
+    @Override
+    public Order updateOrderPricing(double discount) {
+        currentOrder.getOrderItems().forEach(orderItem -> orderItem.setPrice(orderItem.getPrice() * discount));
+        return currentOrder;
+    }
 }

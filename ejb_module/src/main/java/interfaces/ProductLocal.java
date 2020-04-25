@@ -11,4 +11,6 @@ public interface ProductLocal{
     List<Product> loadAllProducts();
 
     List<Product> searchProduct(String searchInput, List<Product> list);
+
+    List<Product> updateProductPricing(List<Product> list);
 }

@@ -13,6 +13,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Named
@@ -103,6 +105,15 @@ public class ProductController implements Serializable {
 
     }
 
+    public void updateProductPricing() {
+        filteredProductList = productSession.updateProductPricing(productList);
+
+        if (!shoppingCartOrder.getOrderItems().isEmpty()) {
+            shoppingCartSession.updateOrderPricing(userManagement.getUser().getRole().getDiscountMultiplier());
+            totalOrderAmount = shoppingCartSession.updateOrderAmount();
+        }
+
+    }
 
     public ProductLocal getProductSession() {
         return productSession;

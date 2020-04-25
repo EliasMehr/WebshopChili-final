@@ -97,14 +97,4 @@ public class UserManagementBean implements UserManagementLocal {
         return currentUser;
     }
 
-    @Override
-    public boolean isAdmin() {
-        if (currentUser.getRole().getType().equals(Role.Type.ADMIN_USER)) {
-            // If currentUser is Admin
-            return true;
-        } else {
-            // If currentUser is customer of any role type or Null
-            return false;
-        }
-    }
 }

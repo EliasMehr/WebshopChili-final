@@ -24,4 +24,6 @@ public interface ShoppingCartLocal {
 
     double updateOrderAmount();
 
+    Order updateOrderPricing(double discount);
+
 }
