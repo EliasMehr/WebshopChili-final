@@ -40,11 +40,8 @@ public class ProductBean implements ProductLocal {
 
     @Override
     public List<Product> updateProductPricing(List<Product> originalList) {
-        System.out.println(originalList);
-        System.out.println(originalList.get(0).getPrice());
 
-        List<Product> list = new ArrayList<>(originalList);
-        System.out.println(list);
+        List<Product> list = originalList.stream().map(Product::new).collect(Collectors.toList());
 
         list.forEach(product -> product.setPrice(product.getPrice() * userManagement.getUser().getRole().getDiscountMultiplier()));
         return list;

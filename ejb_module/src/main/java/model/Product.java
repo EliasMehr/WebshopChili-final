@@ -33,6 +33,17 @@ public class Product implements Serializable {
     @Column(name = "image_url")
     private String image_url;
 
+    public Product() {
+    }
+
+    public Product(Product product) {
+        this.id = product.id;
+        this.scoville_strength = product.scoville_strength;
+        this.description = product.description;
+        this.price = product.price;
+        this.name = product.name;
+        this.image_url = product.image_url;
+    }
 
     public String getScoville_strength() {
         return scoville_strength;
