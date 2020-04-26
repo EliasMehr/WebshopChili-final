@@ -41,11 +41,17 @@
                             listener="#{productController.searchProduct}"
                     />
                 </p:inputText>
-                <p:commandButton value="Logga in"
+                <h:panelGroup rendered="#{!loginController.successfullyLoggedIn}" >
+                    <p:commandButton value="Logga in"
                                  onclick="PF('loginDialog').show()"/> <!-- action="loggain.xhtml" -->
-                <p:commandButton onclick="PF('regDialog').show()" value="Registrera"/>
-            </f:facet>
+                    <p:commandButton onclick="PF('regDialog').show()" value="Registrera"/>
+                </h:panelGroup>
 
+                <h:panelGroup rendered="#{loginController.successfullyLoggedIn}">
+                    <h:outputText value="Inloggad som: #{loginController.customerName}" />
+                    <p:commandButton value="Logga ut" action="#{loginController.logOut()}" update="menu cartId productGrid" />
+                 </h:panelGroup>
+            </f:facet>
         </p:menubar>
     </h:form>
 
@@ -146,7 +152,7 @@
             <h:panelGrid columns="2"
                          cellpadding="5"
                          styleClass="panelGrid">
-                <p:commandButton update="growl productGrid cartId"
+                <p:commandButton update="growl productGrid cartId menu"
                                  value="Logga in"
                                  action="#{loginController.login}"
                                  process="@form"
@@ -182,7 +188,7 @@
             </p:column>
 
             <p:column headerText="Pris">
-                <p:outputLabel value="#{item.product.price}"/>
+                <p:outputLabel value="#{item.price}"/>
             </p:column>
 
             <p:column headerText="Antal">

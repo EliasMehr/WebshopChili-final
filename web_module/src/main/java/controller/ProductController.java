@@ -62,7 +62,7 @@ public class ProductController implements Serializable {
     }
 
     public void emptyCart() {
-        shoppingCartSession.clear();
+        shoppingCartOrder = shoppingCartSession.clear();
         totalOrderAmount = shoppingCartSession.updateOrderAmount();
     }
 
@@ -109,7 +109,7 @@ public class ProductController implements Serializable {
         filteredProductList = productSession.updateProductPricing(productList);
 
         if (!shoppingCartOrder.getOrderItems().isEmpty()) {
-            shoppingCartSession.updateOrderPricing(userManagement.getUser().getRole().getDiscountMultiplier());
+            shoppingCartOrder = shoppingCartSession.updateOrderPricing(userManagement.getUser().getRole().getDiscountMultiplier());
             totalOrderAmount = shoppingCartSession.updateOrderAmount();
         }
 

@@ -20,7 +20,8 @@ public class LoginController implements Serializable {
     private String username;
     private String password;
     private FacesMessage outputMessage;
-//    private FacesContext.getCurrentInstance()
+    private boolean isSuccessfullyLoggedIn = false;
+
 
     @Inject
     private ProductController productController;
@@ -29,7 +30,6 @@ public class LoginController implements Serializable {
     UserManagementLocal userManagement;
 
     public void login() {
-        boolean isSuccessfullyLoggedIn = false;
 
         if (userManagement.login(username, password)) {
             isSuccessfullyLoggedIn = true;
@@ -59,9 +59,12 @@ public class LoginController implements Serializable {
 
     public void logOut() {
         userManagement.logOut();
+        isSuccessfullyLoggedIn = false;
+        outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Du är nu utloggad");
+        FacesContext.getCurrentInstance().addMessage(null, outputMessage);
 
-        // TODO
-        // Visuell återkoppling att man loggats ut
+        productController.emptyCart();
+        productController.init();
     }
 
     public String getUsername() {
@@ -78,6 +81,18 @@ public class LoginController implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isSuccessfullyLoggedIn() {
+        return isSuccessfullyLoggedIn;
+    }
+
+    public void setSuccessfullyLoggedIn(boolean successfullyLoggedIn) {
+        isSuccessfullyLoggedIn = successfullyLoggedIn;
+    }
+
+    public String getCustomerName() {
+        return isSuccessfullyLoggedIn ? userManagement.getUser().getFirstName() : "";
     }
 
 }
