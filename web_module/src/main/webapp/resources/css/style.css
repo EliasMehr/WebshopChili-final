@@ -10,8 +10,8 @@
 }
 
 .cartImage {
-    width: 5px;
-    height: 5px;
+    width: 50px !important;
+    height: 50px !important;
 }
 
 .panelGrid {
