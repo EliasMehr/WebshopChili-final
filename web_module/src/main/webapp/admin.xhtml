@@ -76,12 +76,12 @@
                              emptyMessage="Inga ordrar finns">
 
                     <p:column footerText="">
-                        <h:outputText value="Beställnings nummer: "/>
-                        <p:commandLink value="#{customerOrder.id}"
+                        <p:commandLink value="Beställningsnummer: #{customerOrder.id}"
                                        onclick="PF('ordersDialog').show()"
-                                       update="orderTable"
+                                       update="orderTable clickedOrderHeader"
                                        >
                             <f:actionListener binding="#{adminController.setOrderItemList(customerOrder.orderItems)}" />
+                            <f:actionListener binding="#{adminController.setClickedOrder(customerOrder)}" />
                         </p:commandLink>
                     </p:column>
 
@@ -103,7 +103,10 @@
     </h:form>
 
     <!-- Popup modal för att visa produkterna som finns i en Beställning -->
-    <p:dialog widgetVar="ordersDialog" modal="true" id="orderId">
+    <p:dialog widgetVar="ordersDialog" modal="true" id="orderDialog">
+        <f:facet name="header">
+            <h:outputText id="clickedOrderHeader" value="Kund: #{adminController.clickedOrder.user.email} - Beställningsnummer: #{adminController.clickedOrder.id}"/>
+        </f:facet>
             <p:dataTable id="orderTable" value="#{adminController.orderItemList}" var="orderProduct" tableStyle="table-layout: auto">
                 <p:column headerText="Bild">
                     <p:graphicImage library="images"
@@ -111,11 +114,13 @@
                                     styleClass="productImage"/>
                 </p:column>
                 <p:column headerText="Produkt">
-                    <h:outputText value="test"/>
                     <h:outputText  value="#{orderProduct.product.name}"/>
                 </p:column>
                 <p:column headerText="Pris">
                     <h:outputText prefix="Pris: " value="#{orderProduct.price}" suffix=" kr"/>
+                </p:column>
+                <p:column headerText="Antal">
+                    <h:outputText prefix="Antal: " value="#{orderProduct.quantity}" suffix=" st"/>
                 </p:column>
                 <p:column headerText="Info">
                     <h:outputText prefix="Produkt Beskrivning: " value="#{orderProduct.product.description}"/>
