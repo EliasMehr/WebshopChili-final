@@ -7,6 +7,7 @@ import model.Product;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

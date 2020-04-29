@@ -70,7 +70,9 @@
                                     name="#{product.image_url}"
                                     styleClass="productImage"/>
                     <p:outputLabel value="Scoville: #{product.scoville_strength}"/>
-                    <p:outputLabel value="#{product.price}kr"/>
+                    <h:outputText value="#{product.price}">
+                        <f:convertNumber pattern="0.## SEK"  groupingUsed="false"/>
+                    </h:outputText>
                 </h:panelGrid>
             </p:commandLink>
         </p:panel>
@@ -96,8 +98,9 @@
                 <h:outputText id="testId"
                               value="#{productController.selectedProduct.description}"/>
                 <br/>
-                <h:outputText value="#{productController.selectedProduct.price}"
-                              suffix=" kr"/>
+                <h:outputText value="#{productController.selectedProduct.price}">
+                    <f:convertNumber pattern="0.## SEK" groupingUsed="false"/>
+                </h:outputText>
                 <br/>
                 <p:panelGrid columns="2">
                     <p:commandButton value="Köp"
@@ -180,7 +183,9 @@
             </p:column>
 
             <p:column headerText="Pris">
-                <p:outputLabel value="#{item.price}"/>
+                <h:outputText value="#{item.price}">
+                    <f:convertNumber pattern="0.## SEK"  groupingUsed="false"/>
+                </h:outputText>
             </p:column>
 
             <p:column headerText="Antal">
@@ -205,7 +210,10 @@
         </p:dataTable>
 
         <f:facet name="footer">
-            <h:outputText  value="Summa: #{productController.totalOrderAmount}" id="totalAmount"/>
+            <h:outputLabel styleClass="totalSum" for="totalAmount" value="Total summa: "/>
+            <h:outputText  styleClass="totalSum" value="#{productController.totalOrderAmount}" id="totalAmount">
+                <f:convertNumber pattern=" 0.## SEK" groupingUsed="false"/>
+            </h:outputText>
             <p:commandButton icon="pi pi-check"
                              value="Beställ"
                              action="#{productController.checkout}"

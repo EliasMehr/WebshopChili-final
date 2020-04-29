@@ -53,3 +53,7 @@
 .ui-messages-error-icon {
     visibility: hidden;
 }
+
+.totalSum {
+    float: left;
+}

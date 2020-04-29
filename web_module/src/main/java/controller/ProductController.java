@@ -44,6 +44,8 @@ public class ProductController implements Serializable {
     public void init() {
         setProductList(productSession.loadAllProducts());
         filteredProductList = productList;
+
+
     }
 
     public void searchProduct() {
