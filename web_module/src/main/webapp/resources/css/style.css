@@ -50,3 +50,6 @@
     overflow: auto;
 }
 
+.ui-messages-error-icon {
+    visibility: hidden;
+}
