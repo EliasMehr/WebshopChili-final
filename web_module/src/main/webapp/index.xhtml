@@ -233,56 +233,57 @@
                 <p:messages closable="true">
                     <p:autoUpdate/>
                 </p:messages>
-                <p:growl id="growlReg" life="2000" showDetail="true"/>
+                <p:growl id="growlReg" life="2000" showDetail="false"/>
 
                 <p:panelGrid columns="4" cellpadding="5" styleClass="panelGrid">
 
                     <h:outputLabel for="fName" value="Förnamn:"/>
                     <p:inputText id="fName" label="fName" value="#{registerController.firstName}"
-                                 required="true" requiredMessage="Skriv ditt förnamn" validatorMessage="Fel: Mellan 3-30 bokstäver" maxlength="30">
+                                 required="true" requiredMessage="Förnamn: Skriv ditt förnamn" validatorMessage="Förnamn: Mellan 3-30 bokstäver" maxlength="30">
                         <f:validateRegex pattern="[a-öA-Ö]+"/>
                         <f:validateLength minimum="3" maximum="30"/>
                     </p:inputText>
 
                     <h:outputLabel for="lName" value="Efternamn:"/>
                     <p:inputText id="lName" label="lName" value="#{registerController.lastName}"
-                                 required="true" requiredMessage="Skriv ditt efternamn" validatorMessage="Fel: Mellan 3-30 bokstäver" maxlength="30">
+                                 required="true" requiredMessage="Efternamn: Skriv ditt efternamn" validatorMessage="Efternamn: Mellan 3-30 bokstäver" maxlength="30">
                         <f:validateRegex pattern="[a-öA-Ö]+"/>
                         <f:validateLength minimum="3" maximum="30"/>
                     </p:inputText>
 
-                    <h:outputLabel for="address" value="Gata:"/>
+                    <h:outputLabel for="address" value="Gatuadress:"/>
                     <p:inputText id="address" label="address" value="#{registerController.address}"
-                                 required="true" requiredMessage="Skriv din adress" validatorMessage="Fel: Mellan 3-30 bokstäver och siffror" maxlength="30">
+                                 required="true" requiredMessage="Gatuadress: Skriv din adress" validatorMessage="Gatuadress: Mellan 3-30 bokstäver och siffror" maxlength="30">
                         <f:validateRegex pattern="^[a-öA-Ö0-9_ ]*$"/>
                         <f:validateLength minimum="3" maximum="30"/>
                     </p:inputText>
 
                     <h:outputLabel for="city" value="Stad:"/>
                     <p:inputText id="city" label="city" value="#{registerController.city}"
-                                 required="true" requiredMessage="Skriv vilken stad" validatorMessage="Fel: Mellan 3-30 bokstäver" maxlength="30">
+                                 required="true" requiredMessage="Stad: Skriv vilken stad" validatorMessage="Stad: Mellan 3-30 bokstäver" maxlength="30">
                         <f:validateRegex pattern="[a-öA-Ö]+"/>
                         <f:validateLength minimum="3" maximum="30"/>
                     </p:inputText>
 
                     <h:outputLabel for="email" value="Mail:"/>
                     <p:inputText id="email" label="email" value="#{registerController.email}"
-                                 required="true" requiredMessage="Skriv din email" maxlength="50"
-                    validatorMessage="Felaktig inmatning [ex@ex.com]">
+                                 required="true" requiredMessage="Mail: Skriv din email" maxlength="50"
+                    validatorMessage="Mail: Felaktig inmatning [ex@ex.com]">
                         <f:validateRegex
                                 pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                     </p:inputText>
                     <h:outputLabel for="phone" value="Telefon:"/>
                     <p:inputMask id="phone" label="phone" value="#{registerController.phone}"
-                                 required="true" requiredMessage="Skriv ditt telefonnr" mask="9999999999"/>
+                                 required="true" requiredMessage="Telefon: Skriv ditt telefonnr" mask="9999999999"/>
 
                     <h:outputLabel for="password" value="Lösenord:"/>
                     <p:password id="password" label="password" value="#{registerController.password}" match="password2"
                                 feedback="true"
-                                required="true" requiredMessage="Skriv ditt lösenord" maxlength="30"/>
+                                required="true" requiredMessage="Lösenord: Skriv ditt lösenord" maxlength="30"
+                    validatorMessage="Lösenord: lösenorden är inte samma"/>
                     <h:outputLabel for="password2" value="Lösenord igen:"/>
                     <p:password id="password2" label="password2" value="#{registerController.password}" feedback="true"
-                                required="true" requiredMessage="Skriv ditt lösenord" maxlength="30"/>
+                                required="true" requiredMessage="Lösenord: Skriv ditt lösenord" maxlength="30"/>
 
                 </p:panelGrid>
                 <p:commandButton action="#{registerController.register}" value="Registrera" ajax="true"
