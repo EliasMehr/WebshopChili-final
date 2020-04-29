@@ -87,7 +87,9 @@
 
                     <p:column>
                         <h:outputText value="Pris: "/>
-                        <p:commandLink value="#{adminController.getPrice(customerOrder)}"/>
+                        <h:outputText value="#{adminController.getPrice(customerOrder)}">
+                            <f:convertNumber pattern=" 0.## SEK" groupingUsed="false"/>
+                        </h:outputText>
                     </p:column>
 
                     <p:column>
@@ -118,7 +120,9 @@
                     <h:outputText  value="#{orderProduct.product.name}"/>
                 </p:column>
                 <p:column headerText="Pris">
-                    <h:outputText prefix="Pris: " value="#{orderProduct.price}" suffix=" kr"/>
+                    <h:outputText prefix="Pris: " value="#{orderProduct.price}">
+                        <f:convertNumber pattern=" 0.## SEK" groupingUsed="false"/>
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Antal">
                     <h:outputText prefix="Antal: " value="#{orderProduct.quantity}" suffix=" st"/>
