@@ -83,7 +83,8 @@
               widgetVar="popup"
               showEffect="fade"
               hideEffect="fade"
-              closeOnEscape="true">
+              closeOnEscape="true"
+              resizable="false">
         <h:form>
             <p:growl id="growlProduct"
                      showDetail="true"
@@ -264,7 +265,7 @@
                     </p:inputText>
                     <h:outputLabel for="phone" value="Telefon:"/>
                     <p:inputMask id="phone" label="phone" value="#{registerController.phone}"
-                                 required="true" requiredMessage="Skriv ditt telefonnr" mask="(999) 999-9999"/>
+                                 required="true" requiredMessage="Skriv ditt telefonnr" mask="9999999999"/>
 
                     <h:outputLabel for="password" value="Lösenord:"/>
                     <p:password id="password" label="password" value="#{registerController.password}" match="password2"

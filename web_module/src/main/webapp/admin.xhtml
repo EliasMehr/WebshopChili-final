@@ -108,6 +108,7 @@
             <h:outputText id="clickedOrderHeader" value="Kund: #{adminController.clickedOrder.user.email} - Beställningsnummer: #{adminController.clickedOrder.id}"/>
         </f:facet>
             <p:dataTable id="orderTable" value="#{adminController.orderItemList}" var="orderProduct" tableStyle="table-layout: auto">
+
                 <p:column headerText="Bild">
                     <p:graphicImage library="images"
                                     name="#{orderProduct.product.image_url}"
