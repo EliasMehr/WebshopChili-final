@@ -3,6 +3,8 @@ package controller;
 import interfaces.UserManagementLocal;
 import model.Role;
 import model.User;
+import org.primefaces.PrimeFaces;
+import org.primefaces.context.PrimeRequestContext;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -36,6 +38,7 @@ public class RegisterController implements Serializable {
 
         if (userManagement.submit(user)) {
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Tack, vi har mottagit din registrering", null);
+//            PrimeFaces.current().executeScript("");
         } else {
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Något gick fel med registreringen", null);
         }
