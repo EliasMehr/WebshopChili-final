@@ -58,7 +58,7 @@ public class ProductController implements Serializable {
         productQuantity = 1;
 
         outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                selectedProduct.getName() , " Tillagd i varukorg");
+                selectedProduct.getName() , " Tillagd i varukorg.");
         FacesContext.getCurrentInstance().addMessage(null, outputMessage);
 
     }
