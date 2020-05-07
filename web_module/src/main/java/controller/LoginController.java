@@ -42,6 +42,9 @@ public class LoginController implements Serializable {
                 productController.updateProductPricing();
             }
 
+            username = "";
+            password = "";
+
         } else {
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Fel användarnamn/lösenord");
         }

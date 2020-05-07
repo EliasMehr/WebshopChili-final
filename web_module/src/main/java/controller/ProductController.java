@@ -92,15 +92,15 @@ public class ProductController implements Serializable {
             shoppingCartOrder = shoppingCartSession.processOrder(userManagement.getUser());
               PrimeFaces current = PrimeFaces.current();
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Beställning lyckades" , null);
+                    "Beställning lyckades" , "Du har nu köpt varor ifrån MR.Jessies egna chilis, tack");
             current.executeScript("PF('cartDialog').hide()");
             totalOrderAmount = 0;
             } else {
-                outputMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Du kan inte ha en tom order" , null);
+                outputMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Du kan inte ha en tom order" , "Du behöver välja en vara först att köpa.");
             }
         } else {
 
-            outputMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Måste logga in!" , null);
+            outputMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Måste logga in!" , "Du behöver logga in först.");
         }
 
         FacesContext.getCurrentInstance().addMessage(null, outputMessage);

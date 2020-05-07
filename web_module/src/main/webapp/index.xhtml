@@ -39,7 +39,7 @@
 
                 <h:panelGroup rendered="#{loginController.successfullyLoggedIn}">
                     <h:outputText value="Inloggad som: #{loginController.customerName}" />
-                    <p:commandButton value="Logga ut" action="#{loginController.logOut()}" update="menu cartId productGrid" />
+                    <p:commandButton value="Logga ut" action="#{loginController.logOut()}" update="loginId menu cartId productGrid" />
                  </h:panelGroup>
             </f:facet>
         </p:menubar>
@@ -287,7 +287,7 @@
 
                 </p:panelGrid>
                 <p:commandButton action="#{registerController.register}" value="Registrera" ajax="true"
-                                 icon="pi pi-check" validateClient="true" styleClass="regButton" update="growlReg"
+                                 icon="pi pi-check" validateClient="true" styleClass="regButton" update="regId growlReg"
                                  oncomplete="if (args &amp;&amp; !args.validationFailed) PF('regDialog').hide()"/>
                 <p:commandButton onclick="PF('regDialog').hide()" value="Avbryt" styleClass="regButton" immediate="true"/>
             </p:panel>

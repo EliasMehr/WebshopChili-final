@@ -38,7 +38,16 @@ public class RegisterController implements Serializable {
 
         if (userManagement.submit(user)) {
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Tack, vi har mottagit din registrering", null);
-//            PrimeFaces.current().executeScript("");
+
+            firstName = "";
+            lastName = "";
+            address = "";
+            city = "";
+            phone = "";
+            email = "";
+            password = "";
+            verifyPassword = "";
+
         } else {
             outputMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Något gick fel med registreringen", null);
         }
